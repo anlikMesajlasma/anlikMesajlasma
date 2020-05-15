@@ -16,21 +16,25 @@ import java.util.ArrayList;
  * @author HP
  */
 public class Contact  implements Serializable{
-    long telefon;
-    String name;
-    ArrayList <Chat> allChat=new ArrayList<>();// client log-in yapttiktan sonra gostirilmek uzere 
-    ArrayList <Contact> contacts=new ArrayList<>(); //clientin arkadslarini saklamak icin
-    String state;//it could be :null (while singing up) log-in (if client not siged-out ) log out (if client registered but signed-out)
-    ObjectOutputStream  outputstream;
-    ObjectInputStream   inputStream;
-    String password;
-
+   protected long telefon;
+   protected String name;
+   protected ArrayList <Chat> allChat=new ArrayList<>();// client log-in yapttiktan sonra gostirilmek uzere 
+   protected ArrayList <Contact> contacts=new ArrayList<>(); //clientin arkadslarini saklamak icin
+   protected String state;//it could be :null (while singing up) log-in (if client not siged-out ) log out (if client registered but signed-out)
+   protected ObjectOutputStream  outputstream;
+   protected ObjectInputStream   inputStream;
+   protected String password;
+   protected String variationQustion ;
+   protected String answer ; 
     public Contact() {
     }
-    public Contact(long telphone_no, String name , String password) {
+    public Contact(long telphone_no, String name , String password, String variationQustion , String answer ) {
         this.telefon = telphone_no;
         this.name = name;
         this.password=password;
+        this.variationQustion=variationQustion;
+        this.answer=answer;
+        
     }
     
  
@@ -39,6 +43,9 @@ public class Contact  implements Serializable{
         this.password=password;
     }
     
-    
+ 
+    public Contact(long telphone_no ) {
+        this.telefon = telphone_no;
+    }
     
 }

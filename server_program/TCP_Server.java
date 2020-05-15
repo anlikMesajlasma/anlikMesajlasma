@@ -72,7 +72,49 @@ public class TCP_Server {
             client.outputstream.writeObject("No client with this tel no ");// clientin outputstream'ini kullanarak kendisine   eklenmedi diye bi cevap yolla 
         }
     }
+    protected void getVarietionQustion(Contact client) throws IOException {
 
+        boolean exsit = false;
+        String qustion = "";
+        for (Contact clientt : allClients) {// check if server has this client by phone no
+            if (clientt.telefon == client.telefon) {
+                exsit = true;
+                qustion = clientt.variationQustion;
+                break;
+            }
+        }
+        if (exsit) {
+            
+                client.outputstream.writeObject(qustion);
+            
+        } else {//yoksa
+            client.outputstream.writeObject("No client with this tel no ");// clientin outputstream'ini kullanarak kendisine   eklenmedi diye bi cevap yolla 
+        }
+    }
+    protected void resetPass(Contact client , String answer) throws IOException {
+
+        boolean exsit = false;
+        String pasw = "";
+        String answerOfclientInlist="";
+        for (Contact clientt : allClients) {// check if server has this client by phone no
+            if (clientt.telefon == client.telefon) {
+                exsit = true;
+                pasw = "0"+clientt.password;
+                answerOfclientInlist=clientt.answer;
+                break;
+            }
+        }
+        if (exsit) {//bu tel numarasi ile daha once kayitli olan clientimiz varsa eger 
+            if (answerOfclientInlist.equals(answer.substring(1))) {
+                System.out.println(answer);
+                client.outputstream.writeObject("0"+pasw);
+            } else  {
+                client.outputstream.writeObject("Wrong answer !");
+            }
+        } else {//yoksa
+            client.outputstream.writeObject("No client with this tel no ");// clientin outputstream'ini kullanarak kendisine   eklenmedi diye bi cevap yolla 
+        }
+    }
     protected void start(int port, javax.swing.JList jTextPaneHistory) throws IOException {
         // server soketi oluşturma (sadece port numarası)
         serverSocket = new ServerSocket(port);
@@ -142,6 +184,7 @@ public class TCP_Server {
         private ObjectOutputStream clientOutput;
         private String UI;
         Contact client_info;
+        String variationQustionAnswer ;
 
         private ListenThread(Socket clientSocket) {
             this.clientSocket = clientSocket;
@@ -188,6 +231,15 @@ public class TCP_Server {
                    if(mesaj instanceof ImageIcon){
                    writeToHistory(mesaj);//bilgisini yaz
 
+                   }
+                   if(mesaj.toString().charAt(0)=='$'){
+                   variationQustionAnswer=mesaj+"";
+                   }
+                   if(mesaj.equals("reset pass")){
+                    resetPass(client_info, variationQustionAnswer);
+                   }
+                   if(mesaj.equals("get variation qustion")){
+                    getVarietionQustion(client_info);
                    }
                 }
                 // baglanan clientin icin   bilgisini server arayuzune yazdiryorum
