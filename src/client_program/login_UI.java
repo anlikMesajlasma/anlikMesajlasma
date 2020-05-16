@@ -5,15 +5,12 @@
  */
 package client_program;
 
-<<<<<<< HEAD
-=======
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import server_program.Contact;
 
->>>>>>> upstream/master
 /**
  *
  * @author HP
@@ -25,8 +22,6 @@ public class login_UI extends javax.swing.JFrame {
      */
     public login_UI() {
         initComponents();
-<<<<<<< HEAD
-=======
        try {
             TCP_Client client = new TCP_Client();
 
@@ -37,7 +32,6 @@ public class login_UI extends javax.swing.JFrame {
             Logger.getLogger(login_UI.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("started"); 
->>>>>>> upstream/master
     }
 
     /**
@@ -51,21 +45,6 @@ public class login_UI extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-<<<<<<< HEAD
-        jTextField2 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jLabel1.setText("Username:");
-
-        jTextField1.setText("jTextField1");
-
-        jTextField2.setText("jTextField2");
-
-=======
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -80,7 +59,6 @@ public class login_UI extends javax.swing.JFrame {
 
         jTextField1.setText("jTextField1");
 
->>>>>>> upstream/master
         jLabel2.setText("Password:");
 
         jButton1.setText("Back");
@@ -91,8 +69,6 @@ public class login_UI extends javax.swing.JFrame {
         });
 
         jButton2.setText("log in ");
-<<<<<<< HEAD
-=======
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -112,7 +88,6 @@ public class login_UI extends javax.swing.JFrame {
 
         jLabel4.setForeground(new java.awt.Color(51, 51, 255));
         jLabel4.setText("forget your password ? ");
->>>>>>> upstream/master
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,24 +95,6 @@ public class login_UI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
-<<<<<<< HEAD
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(44, 44, 44)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                            .addComponent(jTextField1))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addGap(110, 110, 110))))
-=======
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,7 +117,6 @@ public class login_UI extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jToggleButton1)
                 .addGap(95, 95, 95))
->>>>>>> upstream/master
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,17 +125,6 @@ public class login_UI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-<<<<<<< HEAD
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addContainerGap(78, Short.MAX_VALUE))
-=======
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,27 +142,18 @@ public class login_UI extends javax.swing.JFrame {
                         .addComponent(jToggleButton1)
                         .addComponent(jLabel4)))
                 .addContainerGap(20, Short.MAX_VALUE))
->>>>>>> upstream/master
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-<<<<<<< HEAD
-this.setVisible(false);
-new first_jframe().setVisible(true);
-
-=======
         this.setVisible(false);
         new first_jframe().setVisible(true);
->>>>>>> upstream/master
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-<<<<<<< HEAD
-=======
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             long tel = Long.parseLong(jTextField1.getText());
@@ -239,7 +175,6 @@ this.dispose();
         // TODO add your handling code here:
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
->>>>>>> upstream/master
     /**
      * @param args the command line arguments
      */
@@ -266,9 +201,6 @@ this.dispose();
             java.util.logging.Logger.getLogger(login_UI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-<<<<<<< HEAD
-
-=======
         try {
             TCP_Client client = new TCP_Client();
 
@@ -279,15 +211,11 @@ this.dispose();
             Logger.getLogger(login_UI.class.getName()).log(Level.SEVERE, null, ex);
         }
         System.out.println("started");
->>>>>>> upstream/master
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new login_UI().setVisible(true);
-<<<<<<< HEAD
-=======
 
->>>>>>> upstream/master
             }
         });
     }
@@ -297,15 +225,10 @@ this.dispose();
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-<<<<<<< HEAD
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-=======
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JToggleButton jToggleButton1;
->>>>>>> upstream/master
     // End of variables declaration//GEN-END:variables
 }
