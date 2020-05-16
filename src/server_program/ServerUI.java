@@ -136,10 +136,8 @@ public class ServerUI extends javax.swing.JFrame {
     private void jButtonStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonStartActionPerformed
         try {
             int port = Integer.parseInt(jTextFieldPort.getText());
-
             server = new TCP_Server();
-            server.start(port, jTextPaneHistory);
-
+            server.start(port, jTextPaneHistory);//serveri baslatiyoruz 
             disableStartButton();
         } catch (IOException ex) {
             System.out.println("Error - jButtonStartActionPerformed : " + ex);

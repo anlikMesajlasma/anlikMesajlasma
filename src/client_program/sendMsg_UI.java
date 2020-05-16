@@ -5,6 +5,8 @@
  */
 package client_program;
 
+<<<<<<< HEAD
+=======
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -29,6 +31,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+>>>>>>> upstream/master
 /**
  *
  * @author HP
@@ -51,6 +54,10 @@ public class sendMsg_UI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+<<<<<<< HEAD
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+=======
         jMenuItem1 = new javax.swing.JMenuItem();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -79,10 +86,18 @@ public class sendMsg_UI extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jList1);
 
+>>>>>>> upstream/master
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+<<<<<<< HEAD
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+=======
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -109,11 +124,14 @@ public class sendMsg_UI extends javax.swing.JFrame {
                         .addComponent(jButton2))
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43))
+>>>>>>> upstream/master
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+<<<<<<< HEAD
+=======
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 try {                                         
     JFileChooser chooser = new JFileChooser();
@@ -156,6 +174,7 @@ try {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
 
+>>>>>>> upstream/master
     /**
      * @param args the command line arguments
      */
@@ -182,6 +201,9 @@ try {
             java.util.logging.Logger.getLogger(sendMsg_UI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+<<<<<<< HEAD
+
+=======
 try {
                     InetAddress inetAddress = InetAddress.getLocalHost();
                     
@@ -191,6 +213,7 @@ try {
                 } catch (IOException ex) {
                     Logger.getLogger(SingUp_UI.class.getName()).log(Level.SEVERE, null, ex);
                 }
+>>>>>>> upstream/master
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -200,11 +223,14 @@ try {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+<<<<<<< HEAD
+=======
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JList<String> jList1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField1;
+>>>>>>> upstream/master
     // End of variables declaration//GEN-END:variables
 }
