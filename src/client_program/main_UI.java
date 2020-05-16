@@ -14,6 +14,7 @@ public class main_UI extends javax.swing.JFrame {
     /**
      * Creates new form Contact_UI
      */
+<<<<<<< HEAD
     TCP_Client client;
     public main_UI(TCP_Client client) {
         initComponents();
@@ -24,6 +25,11 @@ public class main_UI extends javax.swing.JFrame {
 //        initComponents();
 //        
 //    }
+=======
+    public main_UI() {
+        initComponents();
+    }
+>>>>>>> upstream/master
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -120,11 +126,20 @@ public class main_UI extends javax.swing.JFrame {
 
     private void jButton1_addContactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1_addContactActionPerformed
         // TODO add your handling code here:
+<<<<<<< HEAD
         this.setVisible(false);
         new searchContact(this.client).setVisible(true);
     }//GEN-LAST:event_jButton1_addContactActionPerformed
 
     private void jButton2_sendMsgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2_sendMsgActionPerformed
+=======
+    }//GEN-LAST:event_jButton1_addContactActionPerformed
+
+    private void jButton2_sendMsgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2_sendMsgActionPerformed
+this.setVisible(false);
+new sendMsg_UI().setVisible(true);
+
+>>>>>>> upstream/master
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2_sendMsgActionPerformed
 
@@ -159,7 +174,11 @@ public class main_UI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+<<<<<<< HEAD
 //                new main_UI().setVisible(true);
+=======
+                new main_UI().setVisible(true);
+>>>>>>> upstream/master
             }
         });
     }
