@@ -21,6 +21,7 @@ String varitionQustion;
     /** Creates new form restPassword */
     public restPassword() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
     
 

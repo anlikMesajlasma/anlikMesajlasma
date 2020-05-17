@@ -5,17 +5,23 @@
  */
 package client_program;
 
+import java.util.ArrayList;
+import server_program.Contact;
+
 /**
  *
  * @author HP
  */
 public class main_UI extends javax.swing.JFrame {
-
+    static ArrayList<Contact>contacts = new ArrayList<>();
     /**
      * Creates new form Contact_UI
-     */
-    public main_UI() {
+     */public  main_UI(){}
+    TCP_Client client;
+    public main_UI(TCP_Client client) {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.client = client;
     }
 
     /**
@@ -113,6 +119,8 @@ public class main_UI extends javax.swing.JFrame {
 
     private void jButton1_addContactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1_addContactActionPerformed
         // TODO add your handling code here:
+        this.setVisible(false);
+        new searchContact(this.client).setVisible(true);
     }//GEN-LAST:event_jButton1_addContactActionPerformed
 
     private void jButton2_sendMsgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2_sendMsgActionPerformed
@@ -153,7 +161,7 @@ new sendMsg_UI().setVisible(true);
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new main_UI().setVisible(true);
+//                new main_UI().setVisible(true);
             }
         });
     }

@@ -16,6 +16,7 @@ public class first_jframe extends javax.swing.JFrame {
      */
     public first_jframe() {
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**

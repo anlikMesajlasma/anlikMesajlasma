@@ -5,11 +5,9 @@ import server_program.Contact;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,6 +35,10 @@ public class TCP_Client {
     private static javax.swing.JLabel JLabel;
     private Thread clientThread;
     private static javax.swing.JLabel JLabe2;
+    private JFrame searchContactjFrame;
+    private JLabel errorjLabel;
+    private JLabel namejLabel;
+    private JLabel teljLabel;
 
     protected void sing_up_to_server(Contact client, javax.swing.JLabel jLabelName, javax.swing.JFrame jframe) throws IOException {
         this.JLabel = jLabelName;
@@ -81,6 +83,27 @@ public class TCP_Client {
         TCP_Client.jList = jlist;
     }
 
+    protected void searchAllClientsListOnServer(String tel, javax.swing.JLabel errorjLabel, javax.swing.JLabel namejLabel, javax.swing.JLabel teljLabel, javax.swing.JFrame searchContactjFrame) throws IOException {
+        this.searchContactjFrame = searchContactjFrame;
+        this.errorjLabel = errorjLabel;
+        this.namejLabel = namejLabel;
+        this.teljLabel = teljLabel;
+        this.namejLabel.setText("");
+        this.errorjLabel.setText("");
+        this.teljLabel.setText("");
+        sendMessage("@tel-" + tel);
+    }
+
+    protected void writeBackSearchContactError() {
+        errorjLabel.setForeground(Color.red);
+        this.errorjLabel.setText("Telephone number not found !");
+    }
+
+    protected void writeBackContactDetailsToSearchContactjFrame(Contact contact) {
+        this.namejLabel.setText(contact.getName());
+        this.teljLabel.setText(String.valueOf((contact.getTelefon())));
+    }
+
     protected void start(InetAddress inetAddress) throws IOException {
         // client soketi oluşturma (ip + port numarası)
 
@@ -90,7 +113,8 @@ public class TCP_Client {
         clientInput = new ObjectInputStream(clientSocket.getInputStream());
 
         // server'ı sürekli dinlemek için Thread oluştur
-        clientThread = new ListenThread();
+        clientThread = new ListenThread(this);
+//        clientThread = new ListenThread();
         clientThread.start();
     }
 
@@ -133,8 +157,13 @@ public class TCP_Client {
         }
     }
 
-    class ListenThread extends Thread {
+    class ListenThread extends Thread implements Serializable {
 
+        TCP_Client client;
+
+        public ListenThread(TCP_Client client) {
+            this.client = client;
+        }
 
         // server'dan gelen mesajları dinle
         @Override
@@ -157,12 +186,14 @@ public class TCP_Client {
                     if (mesaj.equals("Created")) {// client servere ilk defa baglanip basarali bir kayit yapttiktan sonra bu mesaji alacak 
                         JOptionPane.showMessageDialog(null, "Successfully singed-up !");// client sing-up jframde ise ve created mesaji geldiyse bunu goster
                         jFrame.setVisible(false);// sing-up jframini kapat 
-                        new main_UI().setVisible(true);// uygulamanin ana j framini ac 
+//                        new main_UI().setVisible(true);// uygulamanin ana j framini ac 
+                        new main_UI(this.client).setVisible(true);// uygulamanin ana j framini ac 
 
                     }
                     if (mesaj.equals("Sucessfully log-in")) {
                         jFrame.dispose();
-                        new main_UI().setVisible(true);
+//                        new main_UI().setVisible(true);
+                        new main_UI(this.client).setVisible(true);// uygulamanin ana j framini ac 
                     }
                     if (mesaj.equals("invalid password !")) {
                         JLabel.setText(mesaj + "");
@@ -194,10 +225,17 @@ public class TCP_Client {
                         // model.add(count, sender + " : " + content);
                         //count++;
                     }
-                    
-                   
-
+                    if (mesaj.equals("sending contact")) {
+                        mesaj = clientInput.readObject();
+                        if (mesaj instanceof Contact) {
+                            writeBackContactDetailsToSearchContactjFrame((Contact) mesaj);
+                        }
+                        if (mesaj.equals("tel number not found")) {
+                            writeBackSearchContactError();
+                        }
+                    }
                 }
+
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println("Error - ListenThread : " + ex);
             }

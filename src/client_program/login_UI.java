@@ -22,6 +22,7 @@ public class login_UI extends javax.swing.JFrame {
      */
     public login_UI() {
         initComponents();
+        this.setLocationRelativeTo(null);
        try {
             TCP_Client client = new TCP_Client();
 
@@ -57,8 +58,6 @@ public class login_UI extends javax.swing.JFrame {
 
         jLabel1.setText("Telephone No :");
 
-        jTextField1.setText("jTextField1");
-
         jLabel2.setText("Password:");
 
         jButton1.setText("Back");
@@ -76,8 +75,6 @@ public class login_UI extends javax.swing.JFrame {
         });
 
         jLabel3.setForeground(new java.awt.Color(255, 0, 0));
-
-        jPasswordField1.setText("jPasswordField1");
 
         jToggleButton1.setText("reset pasword ");
         jToggleButton1.addActionListener(new java.awt.event.ActionListener() {

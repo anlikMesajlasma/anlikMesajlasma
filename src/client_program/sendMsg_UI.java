@@ -39,7 +39,7 @@ public class sendMsg_UI extends javax.swing.JFrame {
      * Creates new form sendMsg_UI
      */
     public sendMsg_UI() {
-        
+        this.setLocationRelativeTo(null);
         initComponents();
         
     }

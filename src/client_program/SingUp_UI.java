@@ -23,6 +23,7 @@ public class SingUp_UI extends javax.swing.JFrame {
      */
     public SingUp_UI() {
         initComponents();
+        this.setLocationRelativeTo(null);
             try {
                     InetAddress inetAddress = InetAddress.getLocalHost();
                     
@@ -77,10 +78,6 @@ public class SingUp_UI extends javax.swing.JFrame {
         jLabel3_singUp_satuat.setForeground(new java.awt.Color(255, 51, 51));
         jLabel3_singUp_satuat.setText("                                                             ");
 
-        jPasswordField1.setText("jPasswordField1");
-
-        jPasswordField2.setText("jPasswordField2");
-
         jLabel3.setText("Pasword:");
 
         jLabel4.setText("R-enter Password:");
@@ -132,12 +129,13 @@ public class SingUp_UI extends javax.swing.JFrame {
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(27, 27, 27)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(67, 67, 67)
-                                        .addComponent(jLabel5))
                                     .addComponent(jTextField2Name)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jTextField1PhnoeNo, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(67, 67, 67)
+                                                .addComponent(jLabel5))
+                                            .addComponent(jTextField1PhnoeNo, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
