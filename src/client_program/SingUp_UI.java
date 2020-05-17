@@ -21,15 +21,9 @@ public class SingUp_UI extends javax.swing.JFrame {
     /**
      * Creates new form SingUp
      */
-<<<<<<< HEAD
-    TCP_Client client;
-    public SingUp_UI(TCP_Client client) {
-        initComponents();
-        this.client = client;
-        this.setLocationRelativeTo(null);
-=======
     public SingUp_UI() {
         initComponents();
+        this.setLocationRelativeTo(null);
             try {
                     InetAddress inetAddress = InetAddress.getLocalHost();
                     
@@ -39,7 +33,6 @@ public class SingUp_UI extends javax.swing.JFrame {
                 } catch (IOException ex) {
                     Logger.getLogger(SingUp_UI.class.getName()).log(Level.SEVERE, null, ex);
                 }
->>>>>>> upstream/master
     }
 
     /**
@@ -65,12 +58,9 @@ public class SingUp_UI extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6_username_warrning = new javax.swing.JLabel();
         jLabel6_pass_warning = new javax.swing.JLabel();
-<<<<<<< HEAD
-=======
         jLabel6 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jTextField1 = new javax.swing.JTextField();
->>>>>>> upstream/master
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,13 +78,6 @@ public class SingUp_UI extends javax.swing.JFrame {
         jLabel3_singUp_satuat.setForeground(new java.awt.Color(255, 51, 51));
         jLabel3_singUp_satuat.setText("                                                             ");
 
-<<<<<<< HEAD
-=======
-        jPasswordField1.setText("jPasswordField1");
-
-        jPasswordField2.setText("jPasswordField2");
-
->>>>>>> upstream/master
         jLabel3.setText("Pasword:");
 
         jLabel4.setText("R-enter Password:");
@@ -114,13 +97,10 @@ public class SingUp_UI extends javax.swing.JFrame {
 
         jLabel6_pass_warning.setForeground(new java.awt.Color(255, 0, 0));
 
-<<<<<<< HEAD
-=======
         jLabel6.setText("Variation Qustion : ");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Your faivorate teacher name", "Your childhood friend name", "Your best mark in math" }));
 
->>>>>>> upstream/master
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -128,45 +108,6 @@ public class SingUp_UI extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(83, 83, 83)
                 .addComponent(jToggleButton1_Back, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-<<<<<<< HEAD
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
-                .addComponent(jButton1Sing_up)
-                .addGap(103, 103, 103))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(64, 64, 64)
-                                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGap(50, 50, 50)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jTextField2Name, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField1PhnoeNo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(jLabel5)
-                                                .addGap(26, 26, 26)))))))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel6_pass_warning, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                            .addComponent(jLabel6_username_warrning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(112, 112, 112)
-                        .addComponent(jLabel3_singUp_satuat, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
-=======
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1Sing_up)
                 .addGap(103, 103, 103))
@@ -188,12 +129,13 @@ public class SingUp_UI extends javax.swing.JFrame {
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(27, 27, 27)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(67, 67, 67)
-                                        .addComponent(jLabel5))
                                     .addComponent(jTextField2Name)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jTextField1PhnoeNo, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(67, 67, 67)
+                                                .addComponent(jLabel5))
+                                            .addComponent(jTextField1PhnoeNo, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(0, 0, Short.MAX_VALUE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -209,7 +151,6 @@ public class SingUp_UI extends javax.swing.JFrame {
                         .addComponent(jLabel6_pass_warning, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
                         .addComponent(jLabel6_username_warrning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jLabel3_singUp_satuat, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
->>>>>>> upstream/master
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -230,19 +171,11 @@ public class SingUp_UI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
-<<<<<<< HEAD
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
-=======
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
->>>>>>> upstream/master
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jPasswordField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6_pass_warning, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-<<<<<<< HEAD
-                .addGap(44, 44, 44)
-                .addComponent(jLabel3_singUp_satuat)
-=======
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -251,7 +184,6 @@ public class SingUp_UI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3_singUp_satuat)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
->>>>>>> upstream/master
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1Sing_up)
@@ -272,29 +204,19 @@ public class SingUp_UI extends javax.swing.JFrame {
                 jLabel6_pass_warning.setText("Passwords doesn't match! !");
                 passMatches = false;
             }
-<<<<<<< HEAD
-=======
             
->>>>>>> upstream/master
 //            Pattern pattern = Pattern.compile("[A-Za-z0-9_]+");
 //            boolean valid = (telefonNo != null) && pattern.matcher(telefonNo).matches();
 //            if (!valid) {
 //                jLabel6_username_warrning.setText( "username must be only Letters and digits");
 //
 //            }
-<<<<<<< HEAD
-            if (passMatches) {
-                Contact contact = new Contact(telefonNo, name, pass);
-//                TCP_Client tcp_client = new TCP_Client();
-                this.client.sing_up_to_server(contact, jLabel3_singUp_satuat, this);
-=======
  String variationQustion = jComboBox1.getSelectedItem()+"";
  
             if (passMatches) {
                 Contact client = new Contact(telefonNo, name, pass,variationQustion,jTextField1.getText() );
                 TCP_Client tcp_client = new TCP_Client();
                 tcp_client.sing_up_to_server(client, jLabel3_singUp_satuat, this);
->>>>>>> upstream/master
             }
 
 //jLabel3_singUp_satuat
@@ -340,22 +262,6 @@ public class SingUp_UI extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-<<<<<<< HEAD
-      
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-//                try {
-//                    new SingUp_UI().setVisible(true);
-//                    InetAddress inetAddress = InetAddress.getLocalHost();
-//                    
-//                    TCP_Client client = new TCP_Client();
-//                    client.start(inetAddress);
-//                    System.out.println("started");
-//                } catch (IOException ex) {
-//                    Logger.getLogger(SingUp_UI.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-=======
       try {
                     InetAddress inetAddress = InetAddress.getLocalHost();
                     
@@ -370,35 +276,25 @@ public class SingUp_UI extends javax.swing.JFrame {
             public void run() {
                     new SingUp_UI().setVisible(true);
 
->>>>>>> upstream/master
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1Sing_up;
-<<<<<<< HEAD
-=======
     private javax.swing.JComboBox<String> jComboBox1;
->>>>>>> upstream/master
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel3_singUp_satuat;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-<<<<<<< HEAD
-=======
     private javax.swing.JLabel jLabel6;
->>>>>>> upstream/master
     private javax.swing.JLabel jLabel6_pass_warning;
     private javax.swing.JLabel jLabel6_username_warrning;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
-<<<<<<< HEAD
-=======
     private javax.swing.JTextField jTextField1;
->>>>>>> upstream/master
     private javax.swing.JTextField jTextField1PhnoeNo;
     private javax.swing.JTextField jTextField2Name;
     private javax.swing.JToggleButton jToggleButton1_Back;

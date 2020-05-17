@@ -13,7 +13,7 @@ public class Msg {
    Object content;
    boolean seen;
 
-    public Msg(int teleNo, Object content) {
+    public Msg(Long teleNo, Object content) {
        this.content = content;
     }
    

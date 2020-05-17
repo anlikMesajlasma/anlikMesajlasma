@@ -1,25 +1,18 @@
 package client_program;
 
-import server_program.Contact;
 import java.awt.Color;
-<<<<<<< HEAD
-=======
 import server_program.Contact;
->>>>>>> upstream/master
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.Socket;
-<<<<<<< HEAD
-=======
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
->>>>>>> upstream/master
+import javax.swing.JList;
 import javax.swing.JOptionPane;
-import java.io.Serializable;
 
 /**
  * @file TCP_Client.java
@@ -34,44 +27,39 @@ public class TCP_Client {
     private static ObjectOutputStream clientOutput;
     private javax.swing.JTextPane historyJTextPane;
     private static javax.swing.JFrame jFrame;
+    private static javax.swing.JList jList;
+    private static final DefaultListModel model = new DefaultListModel();
+    private static int count = 0;
     //private  allServerCont;
-<<<<<<< HEAD
-    private static javax.swing.JLabel NewRegisterSatuJLabel;
-=======
+    private static Contact accuontOwner;
     private static javax.swing.JLabel JLabel;
->>>>>>> upstream/master
     private Thread clientThread;
     private static javax.swing.JLabel JLabe2;
+    private JFrame searchContactjFrame;
+    private JLabel errorjLabel;
+    private JLabel namejLabel;
+    private JLabel teljLabel;
 
-<<<<<<< HEAD
-    protected void sing_up_to_server(Contact contact, javax.swing.JLabel jLabelName, javax.swing.JFrame jframe) throws IOException {
-        this.NewRegisterSatuJLabel = jLabelName;
-=======
     protected void sing_up_to_server(Contact client, javax.swing.JLabel jLabelName, javax.swing.JFrame jframe) throws IOException {
         this.JLabel = jLabelName;
->>>>>>> upstream/master
         jFrame = jframe;
-//        this.contact = contact;
-        sendMessage(contact);// send to  the server  client you want to creat 
-
+        sendMessage(client);// send to  the server  client you want to creat 
+        accuontOwner = client;
         sendMessage("Creat Client");//say to server that you need to creat client
 
     }
 
     protected void log_in_to_server(Contact client, javax.swing.JLabel jLabelName, javax.swing.JFrame jframe) throws IOException {
-<<<<<<< HEAD
-// merve yapacak bu kisimi 
-=======
         this.JLabel = jLabelName;
         jFrame = jframe;
         sendMessage(client);// send to  the server  client you want to creat 
-
+        accuontOwner = client;
         sendMessage("log in");//say to server that you need to creat client
         System.out.println("sent");
 
     }
 
-    void getVariationQustion(Contact client,javax.swing.JLabel jLabelName1 ,javax.swing.JLabel jLabelName2) throws IOException {
+    void getVariationQustion(Contact client, javax.swing.JLabel jLabelName1, javax.swing.JLabel jLabelName2) throws IOException {
         this.JLabel = jLabelName1;
         this.JLabe2 = jLabelName2;
 
@@ -85,28 +73,24 @@ public class TCP_Client {
     void restPass(Contact client, javax.swing.JLabel jLabelName, String answer, javax.swing.JFrame jframe) throws IOException {
         this.JLabel = jLabelName;
         jFrame = jframe;
-        sendMessage("$"+answer);// send to  the server  client you want to creat 
+        sendMessage("$" + answer);// send to  the server  client you want to creat 
         sendMessage("reset pass");//say to server that you need to creat client
         System.out.println("sent");
 
->>>>>>> upstream/master
     }
 
-    private static javax.swing.JFrame searchContactjFrame;
-    private static javax.swing.JLabel errorjLabel;
-    private static javax.swing.JLabel namejLabel;
-    private static javax.swing.JLabel teljLabel;
+    void setlest(JList jlist) {
+        TCP_Client.jList = jlist;
+    }
 
     protected void searchAllClientsListOnServer(String tel, javax.swing.JLabel errorjLabel, javax.swing.JLabel namejLabel, javax.swing.JLabel teljLabel, javax.swing.JFrame searchContactjFrame) throws IOException {
         this.searchContactjFrame = searchContactjFrame;
         this.errorjLabel = errorjLabel;
         this.namejLabel = namejLabel;
         this.teljLabel = teljLabel;
-        this.namejLabel.setText(" ");
-        this.errorjLabel.setText(" ");
-        this.teljLabel.setText(" ");
-//        sendMessage("search for a tel number exist or not");
-//        sendMessage(tel);
+        this.namejLabel.setText("");
+        this.errorjLabel.setText("");
+        this.teljLabel.setText("");
         sendMessage("@tel-" + tel);
     }
 
@@ -131,12 +115,24 @@ public class TCP_Client {
         // server'ı sürekli dinlemek için Thread oluştur
         clientThread = new ListenThread(this);
 //        clientThread = new ListenThread();
-
         clientThread.start();
+    }
+
+    protected void sendMessage(Object message, long tel, javax.swing.JList jlist) throws IOException {
+        // gelen mesajı server'a gönder
+        jList = jlist;
+        clientOutput.writeObject("send msg");
+        clientOutput.writeObject(message);
+        clientOutput.writeObject(tel);
     }
 
     protected void sendMessage(Object message) throws IOException {
         // gelen mesajı server'a gönder
+        clientOutput.writeObject(message);
+    }
+
+    protected void sendObject(Object message) throws IOException {
+        // gelen nesneyi server'a gönder
         clientOutput.writeObject(message);
     }
 
@@ -178,6 +174,11 @@ public class TCP_Client {
                 // server mesaj gönderdiği sürece gelen mesajı al
                 while ((mesaj = clientInput.readObject()) != null) {
                     // serverden gelen mesaj This telefon already exist!ise clientin arayuzune yaz kayit edilmedigini bilsin
+
+                    if (mesaj instanceof Contact) {
+
+                        Contact con = (Contact) mesaj;
+                    }
                     if (mesaj.equals("This telefon already exist!")) {
                         JLabel.setText(mesaj + "");
 
@@ -185,22 +186,14 @@ public class TCP_Client {
                     if (mesaj.equals("Created")) {// client servere ilk defa baglanip basarali bir kayit yapttiktan sonra bu mesaji alacak 
                         JOptionPane.showMessageDialog(null, "Successfully singed-up !");// client sing-up jframde ise ve created mesaji geldiyse bunu goster
                         jFrame.setVisible(false);// sing-up jframini kapat 
-//                        new main_UI().setVisible(true);// uygulamanin ana j framini ac                         
+//                        new main_UI().setVisible(true);// uygulamanin ana j framini ac 
                         new main_UI(this.client).setVisible(true);// uygulamanin ana j framini ac 
 
                     }
-<<<<<<< HEAD
-//                    if (mesaj.equals("sending contact")) {
-                    if (mesaj instanceof Contact) {
-                        writeBackContactDetailsToSearchContactjFrame((Contact) mesaj);
-                    }
-                    if (mesaj.equals("tel number not found")) {
-                        writeBackSearchContactError();
-                    }
-=======
                     if (mesaj.equals("Sucessfully log-in")) {
                         jFrame.dispose();
-                        new main_UI().setVisible(true);
+//                        new main_UI().setVisible(true);
+                        new main_UI(this.client).setVisible(true);// uygulamanin ana j framini ac 
                     }
                     if (mesaj.equals("invalid password !")) {
                         JLabel.setText(mesaj + "");
@@ -208,20 +201,41 @@ public class TCP_Client {
                     if (mesaj.equals("No client with this tel no ")) {
                         JLabel.setText("no client with this number !");
                     }
-                    if (mesaj.equals("Your faivorate teacher name")|mesaj.equals("Your best mark in math")|mesaj.equals(" Your childhood friend name")) {
-                        JLabe2.setText(mesaj+"");
+                    if (mesaj.equals("Your faivorate teacher name") | mesaj.equals("Your best mark in math") | mesaj.equals(" Your childhood friend name")) {
+                        JLabe2.setText(mesaj + "");
                     }
                     if (mesaj.equals("Wrong answer !")) {
                         JLabel.setText(mesaj + "");
                         System.out.println(mesaj);
                     }
-                    if(mesaj.toString().charAt(0)=='0'){
+                    if (mesaj.toString().charAt(0) == '0') {
                         System.out.println("mesaj");
-                        JOptionPane.showMessageDialog(jFrame, "Your password is  "+mesaj.toString().substring(2) );
+                        JOptionPane.showMessageDialog(jFrame, "Your password is  " + mesaj.toString().substring(2));
                     }
+                    if (mesaj.equals("you have nwe msg")) {// eger serverden bunu aldiysan 
+                        System.out.println("from mesaj.equals(\"you have nwe msg\")");
 
->>>>>>> upstream/master
+                        //jList.setModel(model);
+                        Object sender = clientInput.readObject();
+                        System.out.println(sender);
+
+                        Object content = clientInput.readObject();
+                        System.out.println(content);
+
+                        // model.add(count, sender + " : " + content);
+                        //count++;
+                    }
+                    if (mesaj.equals("sending contact")) {
+                        mesaj = clientInput.readObject();
+                        if (mesaj instanceof Contact) {
+                            writeBackContactDetailsToSearchContactjFrame((Contact) mesaj);
+                        }
+                        if (mesaj.equals("tel number not found")) {
+                            writeBackSearchContactError();
+                        }
+                    }
                 }
+
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println("Error - ListenThread : " + ex);
             }

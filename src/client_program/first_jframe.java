@@ -5,15 +5,6 @@
  */
 package client_program;
 
-<<<<<<< HEAD
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-=======
->>>>>>> upstream/master
 /**
  *
  * @author HP
@@ -23,25 +14,9 @@ public class first_jframe extends javax.swing.JFrame {
     /**
      * Creates new form first_jframe
      */
-<<<<<<< HEAD
-    TCP_Client client;
-
     public first_jframe() {
         initComponents();
-        this.client = new TCP_Client();
-        try {
-            InetAddress inetAddress = InetAddress.getLocalHost();
-            client.start(inetAddress);
-//            System.out.println("started");
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(first_jframe.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(first_jframe.class.getName()).log(Level.SEVERE, null, ex);
-        }
-=======
-    public first_jframe() {
-        initComponents();
->>>>>>> upstream/master
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -109,27 +84,16 @@ public class first_jframe extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-<<<<<<< HEAD
-        this.setVisible(false);
-        new SingUp_UI(this.client).setVisible(true);
-
-=======
 new SingUp_UI().setVisible(true);
  this.dispose();
        
->>>>>>> upstream/master
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-<<<<<<< HEAD
-        this.setVisible(false);
-        new login_UI().setVisible(true);
-=======
 new login_UI().setVisible(true);
 this.dispose();
 
->>>>>>> upstream/master
 // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
