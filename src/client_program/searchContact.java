@@ -54,7 +54,6 @@ public class searchContact extends javax.swing.JFrame {
         namejLabel2 = new javax.swing.JLabel();
         namejLabel3 = new javax.swing.JLabel();
         errorjLabel = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
 
@@ -62,7 +61,7 @@ public class searchContact extends javax.swing.JFrame {
 
         jLabel1.setText("Tel. No :");
 
-        jButton1.setText("search");
+        jButton1.setText("Add ");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -78,13 +77,6 @@ public class searchContact extends javax.swing.JFrame {
         namejLabel3.setText("Tel. No:");
 
         errorjLabel.setText(" ");
-
-        jButton2.setText("add");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jLabel2.setForeground(new java.awt.Color(255, 0, 51));
 
@@ -128,9 +120,7 @@ public class searchContact extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3)
-                .addGap(53, 53, 53)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(119, 119, 119))
+                .addGap(245, 245, 245))
             .addGroup(layout.createSequentialGroup()
                 .addGap(104, 104, 104)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -156,9 +146,7 @@ public class searchContact extends javax.swing.JFrame {
                     .addComponent(namejLabel)
                     .addComponent(teljLabel))
                 .addGap(26, 26, 26)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3))
+                .addComponent(jButton3)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(57, Short.MAX_VALUE))
@@ -170,26 +158,14 @@ public class searchContact extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             // TODO add your handling code here:
-            String tel = telNumberjTextField.getText();
-            this.client.searchAllClientsListOnServer(tel, errorjLabel, namejLabel, teljLabel, this, contactToadd);
-            this.jButton2.enableInputMethods(true);
+            long tel = Long.parseLong(telNumberjTextField.getText());
+            System.out.println(tel);
+            this.client.searchAllClientsListOnServer(tel, errorjLabel, namejLabel, teljLabel, this);
+            //this.jButton2.enableInputMethods(true);
         } catch (IOException ex) {
             Logger.getLogger(searchContact.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-     
-
-        int contactsListSize = client.getContact().getContacts().size();
-        client.addContact(jLabel2);
-
-       // client.getContact().getallChat().add(new Chat(client.getContact().getTelefon(), client.getContact().getContacts().get(contactsListSize).getTelefon()));
-        this.dispose();
-        new main_UI(client).setVisible(true);
-
-//main_UI.contacts.add();       // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 this.dispose();
@@ -236,7 +212,6 @@ new main_UI(client).setVisible(true);
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel errorjLabel;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

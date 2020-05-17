@@ -45,6 +45,7 @@ Contact me ;
        //System.out.println("from showContactList"+client.getContact().getContacts().size());
        
        for (Contact contact : client.getContact().getContacts()) {
+           System.out.println("contact"+contact.getTelefon());
            model.add(count,contact.getTelefon()+"");
            count++;
        }
@@ -150,14 +151,16 @@ Contact me ;
 
     private void jButton2_sendMsgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2_sendMsgActionPerformed
         this.setVisible(false);
-        long chatCotactNo = Long.parseLong(jList1_contact.getSelectedValue());
-        Contact selcetedContact = null;
-        for (Contact contact : client.getContact().getContacts()) {
-            if (chatCotactNo == contact.getTelefon()) {
-                selcetedContact = contact;
-                break;
-            }
-        }
+        Contact selcetedContact = new Contact();
+//        if(jList1_contact.isSelectionEmpty()){
+//        long chatCotactNo = Long.parseLong(jList1_contact.getSelectedValue());
+//        
+//        for (Contact contact : client.getContact().getContacts()) {
+//            if (chatCotactNo == contact.getTelefon()) {
+//                selcetedContact = contact;
+//                break;
+//            }
+//        }}
         new sendMsg_UI(client, selcetedContact).setVisible(true);
 
         // TODO add your handling code here:

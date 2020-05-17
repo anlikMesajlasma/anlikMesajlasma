@@ -21,8 +21,7 @@ public class Contact implements Serializable{
    protected static ArrayList <Chat> allChat= new ArrayList<>();// client log-in yapttiktan sonra gostirilmek uzere 
    protected static  ArrayList <Contact> contacts= new ArrayList<>(); //clientin arkadslarini saklamak icin
    protected String state;//it could be :null (while singing up) log-in (if client not siged-out ) log out (if client registered but signed-out)
-   protected ObjectOutputStream  outputstream;
-   protected ObjectInputStream   inputStream;
+ 
    protected String password;
    protected String variationQustion ;
    protected String answer ;
@@ -82,13 +81,7 @@ public class Contact implements Serializable{
         return telefon;
     }
 
-    public ObjectInputStream getInputStream() {
-        return inputStream;
-    }
-
-    public ObjectOutputStream getOutputstream() {
-        return outputstream;
-    }
+   
     
     
     

@@ -161,15 +161,7 @@ public class ServerUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonStopActionPerformed
 
     private void jButtonSendBroadcastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSendBroadcastActionPerformed
-        try {
-            String message = jTextPaneBroadcast.getText();
-            if (!message.isEmpty()) {
-                server.sendBroadcast(message);
-            }
-            jTextPaneBroadcast.setText("");
-        } catch (IOException ex) {
-            System.out.println("Error - jButtonSendBroadcastActionPerformed : " + ex);
-        }
+      
     }//GEN-LAST:event_jButtonSendBroadcastActionPerformed
 
     /**

@@ -96,7 +96,8 @@ public class TCP_Client {
         TCP_Client.jList = jlist;
     }
 
-    protected void searchAllClientsListOnServer(String tel, javax.swing.JLabel errorjLabel, javax.swing.JLabel namejLabel, javax.swing.JLabel teljLabel, javax.swing.JFrame searchContactjFrame, Contact Cahtcontact) throws IOException {
+    protected void searchAllClientsListOnServer(long telTobeadded, javax.swing.JLabel errorjLabel, javax.swing.JLabel namejLabel, javax.swing.JLabel teljLabel, javax.swing.JFrame searchContactjFrame) throws IOException {
+        System.out.println("from telNumberjTextField "+telTobeadded);
         this.searchContactjFrame = searchContactjFrame;
         this.errorjLabel = errorjLabel;
         this.namejLabel = namejLabel;
@@ -104,19 +105,20 @@ public class TCP_Client {
         this.namejLabel.setText("");
         this.errorjLabel.setText("");
         this.teljLabel.setText("");
-        this.chatReciverContact = Cahtcontact;
-        sendMessage("@tel-" + tel);
+        
+//        sendMessage("@tel-" + telTobeadded);
+        addContact(errorjLabel, telTobeadded);
     }
 
-    void addContact(JLabel errorjLabel) {
+    void addContact(JLabel errorjLabel, long contactTobaAdded) {
 
         boolean exsit = false;
         boolean itAccountOwnerNo = false;
-        if (contactToBeadded.getTelefon() == accuontOwner.getTelefon()) {
+        if (contactTobaAdded == accuontOwner.getTelefon()) {
             errorjLabel.setText("You can not add yourself !");
         } else {
             for (Contact contact : accuontOwner.getContacts()) {
-                if (contact.getTelefon() == contactToBeadded.getTelefon()) {
+                if (contact.getTelefon() == contactTobaAdded) {
                     exsit = true;
                 }
 
@@ -125,7 +127,7 @@ public class TCP_Client {
                 try {
                     System.out.println("!exsit");
                     sendMessage("@ add new contact");
-                    sendMessage(contactToBeadded);
+                    sendMessage(contactTobaAdded);
                     System.out.println("sent to server ");
                 } catch (IOException ex) {
                     Logger.getLogger(TCP_Client.class.getName()).log(Level.SEVERE, null, ex);
@@ -234,16 +236,16 @@ public class TCP_Client {
                         mesaj = clientInput.readObject();
                         JOptionPane.showMessageDialog(null, "Successfully singed-up !");// client sing-up jframde ise ve created mesaji geldiyse bunu goster
                         jFrame.setVisible(false);// sing-up jframini kapat 
-                        accuontOwner = (Contact) mesaj;
+                        client.accuontOwner = (Contact) mesaj;
                         new main_UI(client).setVisible(true);// uygulamanin ana j framini ac 
 
                     }
                     if (mesaj.equals("Sucessfully log-in")) {
-                        
-                         mesaj = clientInput.readObject();
-                         Contact me = (Contact) mesaj;
-                         //Collections.copy(me.getContacts(),((Contact)mesaj).getContacts() );
-                       System.out.println("from  log in tcp client : size of contact list " + me.getContacts()+ "Name "+ me.getState());
+
+                        mesaj = clientInput.readObject();
+                        client.accuontOwner = (Contact) mesaj;
+                        //Collections.copy(me.getContacts(),((Contact)mesaj).getContacts() );
+                        //System.out.println("from  log in tcp client : size of contact list " + me.getContacts()+ "Name "+ me.getState());
                         System.out.println("size: " + accuontOwner.getContacts().size());
                         new main_UI(this.client).setVisible(true);// uygulamanin ana j framini ac 
                         jFrame.dispose();
@@ -290,10 +292,10 @@ public class TCP_Client {
                     }
                     if (mesaj.equals("@ contact added")) {
                         mesaj = clientInput.readObject();
-                        ArrayList<Contact> arr =  (ArrayList<Contact>) mesaj;
-                        System.out.println("client.accuontOwner.getContacts().size(): " + arr.size());
-                       
-                        
+                        client.accuontOwner.getContacts().add(((Contact)mesaj));
+                        searchContactjFrame.dispose();
+                        System.out.println(client.accuontOwner.getContacts().size());
+                        new main_UI(client).setVisible(true);
 
                     }
                 }
