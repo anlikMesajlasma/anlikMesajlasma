@@ -36,11 +36,11 @@ public class ServerUI extends javax.swing.JFrame {
         jButtonSendBroadcast = new javax.swing.JButton();
         jTextFieldPort = new javax.swing.JTextField();
         jLabelPort = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextPaneHistory = new javax.swing.JTextPane();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextPaneBroadcast = new javax.swing.JTextPane();
         jLabelHistory = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Server");
@@ -75,21 +75,28 @@ public class ServerUI extends javax.swing.JFrame {
 
         jLabelPort.setText("Port:");
 
-        jTextPaneHistory.setEditable(false);
-        jScrollPane1.setViewportView(jTextPaneHistory);
-
         jScrollPane2.setViewportView(jTextPaneBroadcast);
 
         jLabelHistory.setText("History:");
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane3.setViewportView(jList1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabelHistory)
                             .addComponent(jButtonSendBroadcast, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
@@ -103,8 +110,7 @@ public class ServerUI extends javax.swing.JFrame {
                                 .addComponent(jTextFieldPort, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(4, 4, 4))
                             .addComponent(jButtonStart, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButtonStop, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(jScrollPane1))
+                            .addComponent(jButtonStop, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -125,9 +131,9 @@ public class ServerUI extends javax.swing.JFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelHistory)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         pack();
@@ -137,7 +143,7 @@ public class ServerUI extends javax.swing.JFrame {
         try {
             int port = Integer.parseInt(jTextFieldPort.getText());
             server = new TCP_Server();
-            server.start(port, jTextPaneHistory);//serveri baslatiyoruz 
+            server.start(port, jList1);//serveri baslatiyoruz 
             disableStartButton();
         } catch (IOException ex) {
             System.out.println("Error - jButtonStartActionPerformed : " + ex);
@@ -208,11 +214,11 @@ public class ServerUI extends javax.swing.JFrame {
     private javax.swing.JButton jButtonStop;
     private javax.swing.JLabel jLabelHistory;
     private javax.swing.JLabel jLabelPort;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextFieldPort;
     private javax.swing.JTextPane jTextPaneBroadcast;
-    private javax.swing.JTextPane jTextPaneHistory;
     // End of variables declaration//GEN-END:variables
 
     private void disableStartButton() {

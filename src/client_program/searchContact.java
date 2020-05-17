@@ -21,6 +21,7 @@ public class searchContact extends javax.swing.JFrame{
     TCP_Client client;
     public searchContact(TCP_Client client) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.client = client;
     }
 
@@ -41,6 +42,7 @@ public class searchContact extends javax.swing.JFrame{
         namejLabel2 = new javax.swing.JLabel();
         namejLabel3 = new javax.swing.JLabel();
         errorjLabel = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,11 +59,18 @@ public class searchContact extends javax.swing.JFrame{
 
         teljLabel.setText(" ");
 
-	errorjLabel.setText(" ");
-
         namejLabel2.setText("Name:");
 
         namejLabel3.setText("Tel. No:");
+
+        errorjLabel.setText(" ");
+
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -93,6 +102,10 @@ public class searchContact extends javax.swing.JFrame{
                             .addComponent(jLabel1)
                             .addComponent(errorjLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(139, 139, 139)
+                .addComponent(jButton2)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,7 +126,9 @@ public class searchContact extends javax.swing.JFrame{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(namejLabel)
                     .addComponent(teljLabel))
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(jButton2)
+                .addContainerGap(98, Short.MAX_VALUE))
         );
 
         pack();
@@ -128,6 +143,10 @@ public class searchContact extends javax.swing.JFrame{
             Logger.getLogger(searchContact.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       //main_UI.contacts.add();       // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -167,6 +186,7 @@ public class searchContact extends javax.swing.JFrame{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel errorjLabel;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel namejLabel;
     private javax.swing.JLabel namejLabel2;
