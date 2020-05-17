@@ -8,21 +8,33 @@ package client_program;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import server_program.Chat;
+import server_program.Contact;
 
 /**
  *
  * @author Moaaz
  */
-public class searchContact extends javax.swing.JFrame{
+public class searchContact extends javax.swing.JFrame {
 
     /**
      * Creates new form searchContact
      */
-    TCP_Client client;
+     TCP_Client client;
+    Contact contactToadd;
+    static int count = 0;
+
     public searchContact(TCP_Client client) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.client = client;
+        System.out.println("searchContact.client: " + client.toString());
+        //this.jButton2.enableInputMethods(false);
+    }
+
+    public void getContactToadd(Contact contact) {
+
+        this.contactToadd = contact;
     }
 
     /**
@@ -43,6 +55,8 @@ public class searchContact extends javax.swing.JFrame{
         namejLabel3 = new javax.swing.JLabel();
         errorjLabel = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,10 +79,19 @@ public class searchContact extends javax.swing.JFrame{
 
         errorjLabel.setText(" ");
 
-        jButton2.setText("jButton2");
+        jButton2.setText("add");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setForeground(new java.awt.Color(255, 0, 51));
+
+        jButton3.setText("cancel ");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -103,9 +126,15 @@ public class searchContact extends javax.swing.JFrame{
                             .addComponent(errorjLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
-                .addGap(139, 139, 139)
-                .addComponent(jButton2)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addGap(53, 53, 53)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(119, 119, 119))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(104, 104, 104)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -127,8 +156,12 @@ public class searchContact extends javax.swing.JFrame{
                     .addComponent(namejLabel)
                     .addComponent(teljLabel))
                 .addGap(26, 26, 26)
-                .addComponent(jButton2)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(57, Short.MAX_VALUE))
         );
 
         pack();
@@ -138,15 +171,32 @@ public class searchContact extends javax.swing.JFrame{
         try {
             // TODO add your handling code here:
             String tel = telNumberjTextField.getText();
-            this.client.searchAllClientsListOnServer(tel, errorjLabel, namejLabel, teljLabel, this);
+            this.client.searchAllClientsListOnServer(tel, errorjLabel, namejLabel, teljLabel, this, contactToadd);
+            this.jButton2.enableInputMethods(true);
         } catch (IOException ex) {
             Logger.getLogger(searchContact.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       //main_UI.contacts.add();       // TODO add your handling code here:
+     
+
+        int contactsListSize = client.getContact().getContacts().size();
+        client.addContact(jLabel2);
+
+       // client.getContact().getallChat().add(new Chat(client.getContact().getTelefon(), client.getContact().getContacts().get(contactsListSize).getTelefon()));
+        this.dispose();
+        new main_UI(client).setVisible(true);
+
+//main_UI.contacts.add();       // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+this.dispose();
+new main_UI(client).setVisible(true);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -187,7 +237,9 @@ public class searchContact extends javax.swing.JFrame{
     private javax.swing.JLabel errorjLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel namejLabel;
     private javax.swing.JLabel namejLabel2;
     private javax.swing.JLabel namejLabel3;

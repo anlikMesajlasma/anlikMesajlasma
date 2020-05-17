@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
  * @author HP
  */
 public class SingUp_UI extends javax.swing.JFrame {
+                    TCP_Client client = new TCP_Client();
 
     /**
      * Creates new form SingUp
@@ -27,7 +28,7 @@ public class SingUp_UI extends javax.swing.JFrame {
             try {
                     InetAddress inetAddress = InetAddress.getLocalHost();
                     
-                    TCP_Client client = new TCP_Client();
+                   
                     client.start(inetAddress);
                     System.out.println("started");
                 } catch (IOException ex) {
@@ -205,18 +206,12 @@ public class SingUp_UI extends javax.swing.JFrame {
                 passMatches = false;
             }
             
-//            Pattern pattern = Pattern.compile("[A-Za-z0-9_]+");
-//            boolean valid = (telefonNo != null) && pattern.matcher(telefonNo).matches();
-//            if (!valid) {
-//                jLabel6_username_warrning.setText( "username must be only Letters and digits");
-//
-//            }
+
  String variationQustion = jComboBox1.getSelectedItem()+"";
  
             if (passMatches) {
-                Contact client = new Contact(telefonNo, name, pass,variationQustion,jTextField1.getText() );
-                TCP_Client tcp_client = new TCP_Client();
-                tcp_client.sing_up_to_server(client, jLabel3_singUp_satuat, this);
+                Contact clientt = new Contact(telefonNo, name, pass,variationQustion,jTextField1.getText() );
+                client.sing_up_to_server(clientt, jLabel3_singUp_satuat, this);
             }
 
 //jLabel3_singUp_satuat

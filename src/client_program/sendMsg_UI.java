@@ -28,6 +28,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import server_program.Chat;
+import server_program.Contact;
+import server_program.Msg;
 
 /**
  *
@@ -35,18 +38,59 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  */
 public class sendMsg_UI extends javax.swing.JFrame {
 
+    TCP_Client client;
+    Contact contactOfThisChat;
+    static DefaultListModel model = new DefaultListModel();
+    static int count = 0;
+
     /**
      * Creates new form sendMsg_UI
      */
-    public sendMsg_UI() {
+    public sendMsg_UI(TCP_Client client, Contact contactOfThisChat) {
+        this.client = client;
+        this.contactOfThisChat = contactOfThisChat;
         this.setLocationRelativeTo(null);
         initComponents();
-        
+
     }
-  JList getJlist(){
-      return this.jList1;
-      
-  }
+
+    void showThisChat() {
+        jList1.setModel(model);
+
+        for (Chat chat : client.getContact().getallChat()) {
+            if (contactOfThisChat.getTelefon() == chat.getChatContact()) {
+                for (Msg msg : chat.getSeenSentMsg()) {
+                    model.add(count, msg);
+                    count++;
+
+                }
+                model.add(count, "new msg");
+
+                for (Msg msg : chat.getNewMsg()) {
+                    model.add(count, msg);
+                    count++;
+
+                }
+            }
+        }
+    }
+
+    void addMsgToChatHistory(Msg masg) {
+        jList1.setModel(model);
+
+        for (Chat chat : client.getContact().getallChat()) {
+            if (contactOfThisChat.getTelefon() == chat.getChatContact()) {
+                chat.getSeenSentMsg().add(masg);
+                count++;
+
+            }
+        }
+    }
+
+    JList getJlist() {
+        return this.jList1;
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -63,6 +107,7 @@ public class sendMsg_UI extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
+        jButton3 = new javax.swing.JButton();
 
         jMenuItem1.setText("jMenuItem1");
 
@@ -90,22 +135,26 @@ public class sendMsg_UI extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(jList1);
 
+        jButton3.setText("back to main ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(38, 38, 38))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(38, 38, 38))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,9 +166,11 @@ public class sendMsg_UI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2))
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(43, 43, 43))
+                        .addComponent(jButton2)
+                        .addGap(9, 9, 9)
+                        .addComponent(jButton3))
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
@@ -127,42 +178,39 @@ public class sendMsg_UI extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        
-    try {                                         
-    JFileChooser chooser = new JFileChooser();
-    chooser.setCurrentDirectory(new File("c:\\temp"));
-    chooser.setFileFilter(new FileNameExtensionFilter("pdf", "pdf"));
-    chooser.setFileFilter(new FileNameExtensionFilter("pdf", "png"));
-    int value = chooser.showOpenDialog(null);
-    BufferedImage img = null;
-    try {
-        img = ImageIO.read(new File(chooser.getSelectedFile().getAbsolutePath()));
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    Image dimg = img.getScaledInstance(100, 100,
-            Image.SCALE_SMOOTH);
-    ImageIcon imageIcon = new ImageIcon(dimg);
-    
-    DefaultListModel model = new DefaultListModel();
-    jList1.setModel(model);
-    
-    // Initialize the list with items
-    ImageIcon[] items = { imageIcon};
-    for (int i = 0; i < items.length; i++) {
-       model.add(i, "You");
-        model.add(i+1, items[i]);
-        
-    }
-    
-    TCP_Client tcp_client = new TCP_Client();
-    tcp_client.sendMessage(imageIcon);
-    
+        try {
+            JFileChooser chooser = new JFileChooser();
+            chooser.setCurrentDirectory(new File("c:\\temp"));
+            chooser.setFileFilter(new FileNameExtensionFilter("pdf", "pdf"));
+            chooser.setFileFilter(new FileNameExtensionFilter("pdf", "png"));
+            int value = chooser.showOpenDialog(null);
+            BufferedImage img = null;
+            try {
+                img = ImageIO.read(new File(chooser.getSelectedFile().getAbsolutePath()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Image dimg = img.getScaledInstance(100, 100,
+                    Image.SCALE_SMOOTH);
+            ImageIcon imageIcon = new ImageIcon(dimg);
+
+            jList1.setModel(model);
+
+            // Initialize the list with items
+            ImageIcon[] items = {imageIcon};
+            for (int i = 0; i < items.length; i++) {
+                model.add(i, "You");
+                model.add(i + 1, items[i]);
+
+            }
+
+            TCP_Client tcp_client = new TCP_Client();
+            tcp_client.sendMessage(imageIcon);
 
 // "MyFiles_Lst.getModel().getSize()" - indicate the total number of files in jList
-} catch (IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(sendMsg_UI.class.getName()).log(Level.SEVERE, null, ex);
-}
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -171,11 +219,10 @@ public class sendMsg_UI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            
-            TCP_Client tCP_Client= new TCP_Client();
-            tCP_Client.sendMessage("aisha hi", 11, jList1);
-            
-            
+            addMsgToChatHistory(new Msg(jTextField1.getText(), client.getContact().getTelefon(), contactOfThisChat.getTelefon()));
+            showThisChat();
+            client.sendMessage(new Msg(client.getContact().getTelefon(), jTextField1.getText()), jList1);
+
 // TODO add your handling code here:
         } catch (IOException ex) {
             Logger.getLogger(sendMsg_UI.class.getName()).log(Level.SEVERE, null, ex);
@@ -208,20 +255,20 @@ public class sendMsg_UI extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(sendMsg_UI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-try {
-                 
-                    InetAddress inetAddress = InetAddress.getLocalHost();
-                    
-                    TCP_Client client = new TCP_Client();
-                    client.start(inetAddress);
-                    System.out.println("started");
-                } catch (IOException ex) {
-                    Logger.getLogger(SingUp_UI.class.getName()).log(Level.SEVERE, null, ex);
-                }
+        try {
+
+            InetAddress inetAddress = InetAddress.getLocalHost();
+
+            TCP_Client client = new TCP_Client();
+            client.start(inetAddress);
+            System.out.println("started");
+        } catch (IOException ex) {
+            Logger.getLogger(SingUp_UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new sendMsg_UI().setVisible(true);
+                //   new sendMsg_UI().setVisible(true);
             }
         });
     }
@@ -229,6 +276,7 @@ try {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JList<String> jList1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;

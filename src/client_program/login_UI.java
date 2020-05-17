@@ -16,6 +16,7 @@ import server_program.Contact;
  * @author HP
  */
 public class login_UI extends javax.swing.JFrame {
+            TCP_Client tcp_client = new TCP_Client();
 
     /**
      * Creates new form login_UI
@@ -24,11 +25,11 @@ public class login_UI extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
        try {
-            TCP_Client client = new TCP_Client();
+            
 
             InetAddress inetAddress = InetAddress.getLocalHost();
 
-            client.start(inetAddress);
+            tcp_client.start(inetAddress);
         } catch (IOException ex) {
             Logger.getLogger(login_UI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -156,7 +157,6 @@ public class login_UI extends javax.swing.JFrame {
             long tel = Long.parseLong(jTextField1.getText());
             String pass = String.valueOf(jPasswordField1.getPassword());
             Contact contact = new Contact(tel, pass);
-            TCP_Client tcp_client = new TCP_Client();
             tcp_client.log_in_to_server(contact, jLabel3, this);
 
             // TODO add your handling code here:
