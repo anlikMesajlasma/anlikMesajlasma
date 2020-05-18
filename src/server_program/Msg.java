@@ -12,9 +12,25 @@ package server_program;
 public class Msg {
    Object content;
    boolean seen;
+  Long sender ;
+  Long reciver ;
 
-    public Msg(Long teleNo, Object content) {
-       this.content = content;
+    public Msg(Object content, Long sender, Long reciver) {
+        this.content = content;
+        this.seen = seen;
+        this.sender = sender;
+        this.reciver = reciver;
     }
+  
+    public Msg(Long senderTel, Object content) {
+       this.content = content;
+       this.sender=senderTel;
+       
+    }
+
+    public Object getContent() {
+        return content;
+    }
+    
    
 }

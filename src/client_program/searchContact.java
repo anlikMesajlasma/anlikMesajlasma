@@ -8,21 +8,33 @@ package client_program;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import server_program.Chat;
+import server_program.Contact;
 
 /**
  *
  * @author Moaaz
  */
-public class searchContact extends javax.swing.JFrame{
+public class searchContact extends javax.swing.JFrame {
 
     /**
      * Creates new form searchContact
      */
-    TCP_Client client;
+     TCP_Client client;
+    Contact contactToadd;
+     int count = 0;
+
     public searchContact(TCP_Client client) {
         initComponents();
         this.setLocationRelativeTo(null);
         this.client = client;
+        System.out.println("searchContact.client: " + client.toString());
+        //this.jButton2.enableInputMethods(false);
+    }
+
+    public void getContactToadd(Contact contact) {
+
+        this.contactToadd = contact;
     }
 
     /**
@@ -37,35 +49,27 @@ public class searchContact extends javax.swing.JFrame{
         telNumberjTextField = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        namejLabel = new javax.swing.JLabel();
-        teljLabel = new javax.swing.JLabel();
-        namejLabel2 = new javax.swing.JLabel();
-        namejLabel3 = new javax.swing.JLabel();
         errorjLabel = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Tel. No :");
 
-        jButton1.setText("search");
+        jButton1.setText("Add ");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        namejLabel.setText(" ");
-
-        teljLabel.setText(" ");
-
-        namejLabel2.setText("Name:");
-
-        namejLabel3.setText("Tel. No:");
-
+        errorjLabel.setForeground(new java.awt.Color(255, 0, 0));
         errorjLabel.setText(" ");
 
-        jButton2.setText("jButton2");
+        jLabel2.setForeground(new java.awt.Color(255, 0, 51));
+
+        jButton2.setText("Cancel");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -77,35 +81,27 @@ public class searchContact extends javax.swing.JFrame{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(namejLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                                .addComponent(namejLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(namejLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(telNumberjTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButton1))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(74, 74, 74)
-                                        .addComponent(teljLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                        .addGap(55, 55, 55))
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(errorjLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(139, 139, 139)
-                .addComponent(jButton2)
-                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(telNumberjTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(errorjLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(104, 104, 104)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 51, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2)))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,33 +115,32 @@ public class searchContact extends javax.swing.JFrame{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(errorjLabel)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(namejLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(namejLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(namejLabel)
-                    .addComponent(teljLabel))
-                .addGap(26, 26, 26)
                 .addComponent(jButton2)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addGap(83, 83, 83)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            // TODO add your handling code here:
-            String tel = telNumberjTextField.getText();
-            this.client.searchAllClientsListOnServer(tel, errorjLabel, namejLabel, teljLabel, this);
-        } catch (IOException ex) {
-            Logger.getLogger(searchContact.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // TODO add your handling code here:
+        long tel = Long.parseLong(telNumberjTextField.getText());
+        System.out.println(tel);
+         try {
+             this.client.searchAllClientsListOnServer(tel, errorjLabel, this, client);
+             //this.jButton2.enableInputMethods(true);
+         } catch (IOException ex) {
+             Logger.getLogger(searchContact.class.getName()).log(Level.SEVERE, null, ex);
+         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       //main_UI.contacts.add();       // TODO add your handling code here:
+
+this.dispose();
+new main_UI(client).setVisible(true);
+        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
@@ -188,10 +183,7 @@ public class searchContact extends javax.swing.JFrame{
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel namejLabel;
-    private javax.swing.JLabel namejLabel2;
-    private javax.swing.JLabel namejLabel3;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField telNumberjTextField;
-    private javax.swing.JLabel teljLabel;
     // End of variables declaration//GEN-END:variables
 }

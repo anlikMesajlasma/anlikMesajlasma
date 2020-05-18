@@ -5,7 +5,9 @@
  */
 package client_program;
 
+import java.awt.HeadlessException;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import server_program.Contact;
 
 /**
@@ -13,17 +15,49 @@ import server_program.Contact;
  * @author HP
  */
 public class main_UI extends javax.swing.JFrame {
-    static ArrayList<Contact>contacts = new ArrayList<>();
+    //static ArrayList<Contact>contacts = new ArrayList<>();
+
     /**
      * Creates new form Contact_UI
-     */public  main_UI(){}
-    TCP_Client client;
-    public main_UI(TCP_Client client) {
-        initComponents();
-        this.setLocationRelativeTo(null);
-        this.client = client;
+     */
+                static DefaultListModel model = new DefaultListModel();
+
+    public main_UI() throws HeadlessException {
+                initComponents();
+
     }
 
+    static TCP_Client client;
+    private  int count=0;
+Contact me ; 
+    public main_UI(TCP_Client client ,Contact me) {
+        initComponents();
+        this.setTitle( " Tel : "+ client.getContact().getTelefon());
+        this.setLocationRelativeTo(null);
+        this.client = client;
+        this.me=me;
+        showContactList();
+        
+    }
+    public main_UI(TCP_Client client) {
+        initComponents();
+        this.setTitle( " Tel : "+ client.getContact().getTelefon());
+        this.setLocationRelativeTo(null);
+        this.client = client;
+        showContactList();
+        
+    }
+   final void showContactList(){
+
+       jList1_contact.setModel(model);
+       //System.out.println("from showContactList"+client.getContact().getContacts().size());
+
+       for (Contact contact : client.getContact().getContacts()) {
+           System.out.println("contact"+contact.getTelefon());
+           model.add(count,contact.getTelefon()+"");
+           count++;
+       }
+   }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -43,6 +77,16 @@ public class main_UI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jList1_contact.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jList1_contactMouseClicked(evt);
+            }
+        });
+        jList1_contact.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                jList1_contactValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(jList1_contact);
 
         jLabel1.setText("Contact List :");
@@ -124,11 +168,29 @@ public class main_UI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1_addContactActionPerformed
 
     private void jButton2_sendMsgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2_sendMsgActionPerformed
-this.setVisible(false);
-new sendMsg_UI().setVisible(true);
+        this.setVisible(false);
+        long chatCotactNo =0;
+        Contact selcetedContact = new Contact();
+        if(!jList1_contact.isSelectionEmpty()){
+         chatCotactNo = Long.parseLong(jList1_contact.getSelectedValue());
+            System.out.println("chatCotactNo :"+ chatCotactNo);
+        }
+        new sendMsg_UI(client, chatCotactNo).setVisible(true);
 
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton2_sendMsgActionPerformed
+
+    private void jList1_contactValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1_contactValueChanged
+
+
+    }//GEN-LAST:event_jList1_contactValueChanged
+
+    private void jList1_contactMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1_contactMouseClicked
+   jButton2_sendMsg.enable(true);        // TODO add your handling code here:
+
+        
+// TODO add your handling code here:
+    }//GEN-LAST:event_jList1_contactMouseClicked
 
     /**
      * @param args the command line arguments

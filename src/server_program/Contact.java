@@ -18,11 +18,10 @@ import server_program.Chat;
 public class Contact implements Serializable{
   protected long telefon;
    protected String name;
-   protected ArrayList <Chat> allChat=new ArrayList<>();// client log-in yapttiktan sonra gostirilmek uzere 
-   protected ArrayList <Contact> contacts=new ArrayList<>(); //clientin arkadslarini saklamak icin
+   protected static ArrayList <Chat> allChat= new ArrayList<>();// client log-in yapttiktan sonra gostirilmek uzere 
+   protected static  ArrayList <Contact> contacts= new ArrayList<>(); //clientin arkadslarini saklamak icin
    protected String state;//it could be :null (while singing up) log-in (if client not siged-out ) log out (if client registered but signed-out)
-   protected ObjectOutputStream  outputstream;
-   protected ObjectInputStream   inputStream;
+ 
    protected String password;
    protected String variationQustion ;
    protected String answer ;
@@ -37,9 +36,10 @@ public class Contact implements Serializable{
     public Contact(long telefon, String name, ArrayList <Chat> allChat, ArrayList <Contact> contacts, String state) {
         this.telefon = telefon;
         this.name = name;
-        this.allChat = allChat;
-        this.contacts = contacts;
+        this.allChat=allChat;
+        this.contacts=contacts;
         this.state = state;
+       
     }
      public Contact(long telphone_no, String name , String password, String variationQustion , String answer ) {
         this.telefon = telphone_no;
@@ -47,7 +47,9 @@ public class Contact implements Serializable{
         this.password=password;
         this.variationQustion=variationQustion;
         this.answer=answer;
-        
+        this.allChat=new ArrayList<>();        
+        this.contacts=new ArrayList<>();
+
     }
     
       public Contact(long telphone_no, String password) {
@@ -59,7 +61,7 @@ public class Contact implements Serializable{
     }
     
 
-    public ArrayList<Chat> getAllChat() {
+    public ArrayList<Chat> getallChat() {
         return allChat;
     }
 
@@ -79,13 +81,7 @@ public class Contact implements Serializable{
         return telefon;
     }
 
-    public ObjectInputStream getInputStream() {
-        return inputStream;
-    }
-
-    public ObjectOutputStream getOutputstream() {
-        return outputstream;
-    }
+   
     
     
     
