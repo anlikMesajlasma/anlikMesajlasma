@@ -1,6 +1,7 @@
 package client_program;
 
 import java.awt.Color;
+import java.awt.List;
 import server_program.Contact;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -37,17 +38,17 @@ public class TCP_Client {
     private static final DefaultListModel model = new DefaultListModel();
     private static int count = 0;
     //private  allServerCont;
-    private static Contact accuontOwner;
+    private  Contact accuontOwner;
     private Contact chatReciverContact;
     private static javax.swing.JLabel JLabel;
     private Thread clientThread;
     private static javax.swing.JLabel JLabe2;
     private JFrame searchContactjFrame;
-    private JLabel errorjLabel;
+    private static JLabel errorjLabel;
     private JLabel namejLabel;
     private JLabel teljLabel;
     private static Contact contactToBeadded;
-
+     private static TCP_Client clientfronAddingFrmae;
     protected Contact getContact() {
 
         return accuontOwner;
@@ -96,49 +97,33 @@ public class TCP_Client {
         TCP_Client.jList = jlist;
     }
 
-    protected void searchAllClientsListOnServer(long telTobeadded, javax.swing.JLabel errorjLabel, javax.swing.JLabel namejLabel, javax.swing.JLabel teljLabel, javax.swing.JFrame searchContactjFrame) throws IOException {
-        System.out.println("from telNumberjTextField "+telTobeadded);
+    protected void searchAllClientsListOnServer(long telTobeadded, javax.swing.JLabel errorjLabel,  javax.swing.JFrame searchContactjFrame , TCP_Client client) throws IOException {
+        System.out.println("from telNumberjTextField " + telTobeadded);
         this.searchContactjFrame = searchContactjFrame;
         this.errorjLabel = errorjLabel;
-        this.namejLabel = namejLabel;
-        this.teljLabel = teljLabel;
-        this.namejLabel.setText("");
-        this.errorjLabel.setText("");
-        this.teljLabel.setText("");
-        
-//        sendMessage("@tel-" + telTobeadded);
+      
+        this.clientfronAddingFrmae= client;
+
         addContact(errorjLabel, telTobeadded);
     }
 
     void addContact(JLabel errorjLabel, long contactTobaAdded) {
-
+        System.out.println("contactTobaAdded" + contactTobaAdded);
         boolean exsit = false;
         boolean itAccountOwnerNo = false;
         if (contactTobaAdded == accuontOwner.getTelefon()) {
             errorjLabel.setText("You can not add yourself !");
         } else {
-            for (Contact contact : accuontOwner.getContacts()) {
-                if (contact.getTelefon() == contactTobaAdded) {
-                    exsit = true;
-                }
 
+            try {
+                System.out.println("!exsit");
+                sendMessage("@ add new contact");
+                sendMessage(contactTobaAdded);
+                System.out.println("sent to server ");
+            } catch (IOException ex) {
+                Logger.getLogger(TCP_Client.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if (!exsit) {
-                try {
-                    System.out.println("!exsit");
-                    sendMessage("@ add new contact");
-                    sendMessage(contactTobaAdded);
-                    System.out.println("sent to server ");
-                } catch (IOException ex) {
-                    Logger.getLogger(TCP_Client.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            } else if (exsit) {
 
-                errorjLabel.setText("You have this contact already");
-            } else {
-                errorjLabel.setText("You can not add yourself !");
-
-            }
         }
     }
 
@@ -171,6 +156,16 @@ public class TCP_Client {
         // gelen mesajı server'a gönder
         jList = jlist;
         clientOutput.writeObject("@-send msg for other client:");
+        clientOutput.writeObject(msg);
+    }
+
+    protected void sendMessage(long senderNo, long reciver, Object msg, javax.swing.JList jlist) throws IOException {
+        // gelen mesajı server'a gönder
+        jList = jlist;
+        clientOutput.writeObject("@-send string msg for other client:");
+        clientOutput.writeObject(senderNo);
+        clientOutput.writeObject(reciver);
+
         clientOutput.writeObject(msg);
     }
 
@@ -272,10 +267,10 @@ public class TCP_Client {
 
                         //jList.setModel(model);
                         Object sender = clientInput.readObject();
+                        Object mesg = clientInput.readObject();
                         System.out.println(sender);
 
-                        Object content = clientInput.readObject();
-                        System.out.println(content);
+                        System.out.println(mesg);
 
                         // model.add(count, sender + " : " + content);
                         //count++;
@@ -292,12 +287,27 @@ public class TCP_Client {
                     }
                     if (mesaj.equals("@ contact added")) {
                         mesaj = clientInput.readObject();
-                        client.accuontOwner.getContacts().add(((Contact)mesaj));
+                        ArrayList<Contact> updatedList = new ArrayList<>((ArrayList<Contact>) mesaj);
+                        for (Contact contact : updatedList) {
+                            client.accuontOwner.getContacts().add(contact);
+                        }
+                      
+
                         searchContactjFrame.dispose();
                         System.out.println(client.accuontOwner.getContacts().size());
                         new main_UI(client).setVisible(true);
 
                     }
+                    
+                      if(mesaj.equals("You have this contact already !")){
+                        mesaj = clientInput.readObject();
+                        ArrayList<Contact> updatedList = new ArrayList<>((ArrayList<Contact>) mesaj);
+                        for (Contact contact : updatedList) {
+                           clientfronAddingFrmae.accuontOwner.getContacts().add(contact);
+                        }
+                        errorjLabel.setText("You have this contact already !");
+                        
+                        }
                 }
 
             } catch (IOException | ClassNotFoundException ex) {

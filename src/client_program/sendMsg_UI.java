@@ -39,16 +39,16 @@ import server_program.Msg;
 public class sendMsg_UI extends javax.swing.JFrame {
 
     TCP_Client client;
-    Contact contactOfThisChat;
+    static  long selectedContactNo;
     static DefaultListModel model = new DefaultListModel();
     static int count = 0;
 
     /**
      * Creates new form sendMsg_UI
      */
-    public sendMsg_UI(TCP_Client client, Contact contactOfThisChat) {
+    public sendMsg_UI(TCP_Client client, long selectedContactNo) {
         this.client = client;
-        this.contactOfThisChat = contactOfThisChat;
+        this.selectedContactNo = selectedContactNo;
         this.setLocationRelativeTo(null);
         initComponents();
 
@@ -58,7 +58,7 @@ public class sendMsg_UI extends javax.swing.JFrame {
         jList1.setModel(model);
 
         for (Chat chat : client.getContact().getallChat()) {
-            if (contactOfThisChat.getTelefon() == chat.getChatContact()) {
+            if (selectedContactNo == chat.getChatContact()) {
                 for (Msg msg : chat.getSeenSentMsg()) {
                     model.add(count, msg);
                     count++;
@@ -79,7 +79,7 @@ public class sendMsg_UI extends javax.swing.JFrame {
         jList1.setModel(model);
 
         for (Chat chat : client.getContact().getallChat()) {
-            if (contactOfThisChat.getTelefon() == chat.getChatContact()) {
+            if (selectedContactNo== chat.getChatContact()) {
                 chat.getSeenSentMsg().add(masg);
                 count++;
 
@@ -136,6 +136,11 @@ public class sendMsg_UI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jList1);
 
         jButton3.setText("back to main ");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -145,23 +150,23 @@ public class sendMsg_UI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(38, 38, 38))))
+                        .addGap(38, 38, 38))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
@@ -219,15 +224,21 @@ public class sendMsg_UI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            addMsgToChatHistory(new Msg(jTextField1.getText(), client.getContact().getTelefon(), contactOfThisChat.getTelefon()));
-            showThisChat();
-            client.sendMessage(new Msg(client.getContact().getTelefon(), jTextField1.getText()), jList1);
+           // addMsgToChatHistory(new Msg(jTextField1.getText(), client.getContact().getTelefon(), selectedContactNo.getTelefon()));
+           // showThisChat();
+            client.sendMessage(client.getContact().getTelefon(), selectedContactNo, jTextField1.getText(), jList1);
 
 // TODO add your handling code here:
         } catch (IOException ex) {
             Logger.getLogger(sendMsg_UI.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+new main_UI(client ,client.getContact()).setVisible(true);
+this.dispose();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
