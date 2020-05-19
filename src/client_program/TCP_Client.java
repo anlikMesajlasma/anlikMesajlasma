@@ -271,11 +271,10 @@ public class TCP_Client {
                     if (mesaj.toString().charAt(0) == '0') {
                         JOptionPane.showMessageDialog(jFrame_singUp, "Your password is  " + mesaj.toString().substring(2));
                     }
-                    if (mesaj.equals("you have nwe msg")) {// eger serverden bunu aldiysan 
+                    if (mesaj.equals("added to archive of both")) {// eger serverden bunu aldiysan 
 
                         //jList.setModel(model);
-                        Object sender = clientInput.readObject();
-                        Object mesg = clientInput.readObject();
+                        System.out.println(mesaj);
 
                         // model.add(count, sender + " : " + content);
                         //count++;
@@ -316,17 +315,14 @@ public class TCP_Client {
 
                         int count = 0;
                         for (Contact contact : updatedList) {
-                            model.add(count, contact.getTelefon());
+                            model.add(count, contact.getTelefon()+"");
                             count++;
                         }
-
                     }
                 }
-
             } catch (IOException | ClassNotFoundException ex) {
                 System.out.println("Error - ListenThread : " + ex);
             }
         }
     }
-
 }

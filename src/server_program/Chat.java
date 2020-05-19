@@ -14,12 +14,12 @@ import java.util.ArrayList;
 public class Chat {
     long chatContact;
 
-    ArrayList<Msg> seenSentMsg ;
-    ArrayList<Msg> newMsg ;
+    ArrayList<String> msges ;
+   // ArrayList<Msg> newMsg ;
 
-    public Chat(long chatContact ,String msg) {
-        this.seenSentMsg = new ArrayList<>();
-        this.newMsg=new ArrayList<>();
+    public Chat(long chatContact ) {
+//        this.seenSentMsg = new ArrayList<>();
+       this.msges=new ArrayList<>();
     }
 
 
@@ -28,13 +28,13 @@ public class Chat {
         return chatContact;
     }
 
-    public ArrayList<Msg> getSeenSentMsg() {
-        return seenSentMsg;
-    }
-
-    public ArrayList<Msg> getNewMsg() {
-        return newMsg;
-    }
+//    public ArrayList<Msg> getSeenSentMsg() {
+//        return seenSentMsg;
+//    }
+//
+//    public ArrayList<Msg> getNewMsg() {
+//        return newMsg;
+//    }
 
     
 }

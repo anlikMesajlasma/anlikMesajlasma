@@ -184,14 +184,12 @@ public class main_UI extends javax.swing.JFrame {
 
     private void jButton2_sendMsgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2_sendMsgActionPerformed
         try {
-            long chatCotactNo = 0;
+            long chatCotactNo=0;
 //            Contact selcetedContact = new Contact();
-            System.out.println(" this is from sed"+jList1_contact.getSelectedValue() + "");
-            if (!jList1_contact.isSelectionEmpty()) {
-
-                chatCotactNo = Long.parseLong(jList1_contact.getSelectedValue() + "");
+            System.out.println(" this is from sed"+jList1_contact.getSelectedValue()+ "");
+       
                 System.out.println("chatCotactNo :" + chatCotactNo);
-            }
+            
 
             new sendMsg_UI(client, chatCotactNo).setVisible(true);
             this.setVisible(false);

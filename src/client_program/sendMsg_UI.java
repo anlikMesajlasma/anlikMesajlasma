@@ -47,6 +47,9 @@ public class sendMsg_UI extends javax.swing.JFrame {
      * Creates new form sendMsg_UI
      */
     public sendMsg_UI(TCP_Client client, long selectedContactNo) throws IOException {
+        if (client.getContact() != null) {
+            this.setTitle(" Tel : " + client.getContact().getTelefon());
+        }
         this.client = client;
         this.selectedContactNo = selectedContactNo;
         this.setLocationRelativeTo(null);
@@ -214,8 +217,7 @@ public class sendMsg_UI extends javax.swing.JFrame {
 
             }
 
-            TCP_Client tcp_client = new TCP_Client();
-            tcp_client.sendMessage(imageIcon);
+            client.sendMessage(imageIcon);
 
 // "MyFiles_Lst.getModel().getSize()" - indicate the total number of files in jList
         } catch (IOException ex) {
