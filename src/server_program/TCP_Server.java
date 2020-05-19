@@ -27,13 +27,13 @@ import javax.swing.ImageIcon;
  */
 public class TCP_Server {
 
-    ArrayList<OutputStreams> objectOutputStreams = new ArrayList<>();
+    ArrayList<OutputStreams> onlineClientList = new ArrayList<>();
     private ServerSocket serverSocket;
     private javax.swing.JList historyJList;
     private Thread serverThread;
-    private  ArrayList<Contact> allClients = new ArrayList<>();
-    private static DefaultListModel model = new DefaultListModel();
-    private static int count = 0;
+    private ArrayList<Contact> allClients = new ArrayList<>();
+    private DefaultListModel model = new DefaultListModel();
+    private int count = 0;
 
     protected void creatClient(Contact newContact, ObjectOutputStream outputstream) throws IOException {
 
@@ -45,13 +45,11 @@ public class TCP_Server {
         }
         if (!exsit) {//bu tel numarasi ile daha once kayitli olan clientimiz yoksa eger 
 
-            newContact.state = "online";// cleintin durumunu degistir 
+            newContact.state = "";// cleintin durumunu degistir 
             allClients.add(newContact);// cleinti ekle 
             outputstream.writeObject("Created");// clientin outputstream'ini kullanarak kendisine   eklendi diye bi cevap yolla 
-            objectOutputStreams.add(new OutputStreams(outputstream, newContact.telefon));
-            System.out.println("newContact.outputstream.writeObject(\"Created\")");
             outputstream.writeObject(newContact);
-            System.out.println("sent Contact");
+
         } else {//varsa 
 
             outputstream.writeObject("This telefon already exist!");// clientin outputstream'ini kullanarak kendisine   eklenmedi diye bi cevap yolla 
@@ -79,7 +77,6 @@ public class TCP_Server {
                 outputstream.writeObject(client);// sending acoountOwner info
 
             } else {
-                System.out.println("pas1" + pasw + "pas2" + client.password);
                 outputstream.writeObject("invalid password !");
             }
         } else {//yoksa
@@ -109,44 +106,46 @@ public class TCP_Server {
     }
 
     void addContactToClientContactList(Contact cont, long contactTobeAdded, ObjectOutputStream outputstream) throws IOException {
-        System.out.println("fron server adding contatct");
+        boolean exist = false;
+
         for (Contact client : allClients) {
-            if (client.getTelefon() == cont.telefon) {
+
+            if (contactTobeAdded == client.telefon) {
+                exist = true;
+                break;
+            }
+        }
+        if (exist) {
+            exist = false;
+
+            for (Contact client : allClients) {
                 if (client.telefon == cont.telefon) {
-                    boolean exsit = false;
                     for (Contact contact : client.getContacts()) {
-                        System.out.println("contact.getTelefon(): " + contact.getTelefon());
                         if (contact.getTelefon() == contactTobeAdded) {
-                            exsit = true;
+
+                            exist = true;
                             break;
                         }
                     }
-                    if (!exsit) {
-                        client.getContacts().add(new Contact(contactTobeAdded));
-
+                    if (!exist) {
+                        client.contacts.add(new Contact(contactTobeAdded));
+                        for (Contact contact : client.contacts) {
+                        }
                         try {
                             outputstream.writeObject("@ contact added");
-                            System.out.println(client);
-                            for (Contact contact : client.getContacts()) {
-                                System.out.println(cont+" : "+contact.telefon);
-                            }
-                            outputstream.writeObject(client.getContacts());
-
                         } catch (IOException ex) {
                             Logger.getLogger(TCP_Server.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     } else {
-                        
                         outputstream.writeObject("You have this contact already !");
                         outputstream.writeObject(client.getContacts());
                     }
                 }
-             break;
             }
+        } else {
+            outputstream.writeObject("No contact found with this number !");
         }
-
     }
-
     protected void resetPass(Contact client, String answer, ObjectOutputStream outputstream) throws IOException {
 
         boolean exsit = false;
@@ -162,7 +161,6 @@ public class TCP_Server {
         }
         if (exsit) {//bu tel numarasi ile daha once kayitli olan clientimiz varsa eger 
             if (answerOfclientInlist.equals(answer.substring(1))) {
-                System.out.println(answer);
                 outputstream.writeObject("0" + pasw);
             } else {
                 outputstream.writeObject("Wrong answer !");
@@ -170,6 +168,28 @@ public class TCP_Server {
         } else {//yoksa
             outputstream.writeObject("No client with this tel no ");// clientin outputstream'ini kullanarak kendisine   eklenmedi diye bi cevap yolla 
         }
+    }
+
+    protected void sendContactList(long tel) throws IOException {
+        ObjectOutputStream clientOutput = null;
+        for (OutputStreams client : onlineClientList) {
+            if (client.clientNo == tel) {
+                clientOutput = client.clientoutput;
+            }
+        }
+        boolean found = false;
+        ArrayList<Contact> updatedList = null;
+        for (Contact client : allClients) {
+            if (tel == client.telefon) {
+               updatedList= new ArrayList<>(client.contacts) ;
+               found=true;
+            }
+        }
+        if (found) {
+            clientOutput.writeObject("@Your contacts ");
+            clientOutput.writeObject(updatedList);
+        }
+
     }
 
     protected void searchClient(String tel, Contact client_info, ObjectOutputStream outputstream) {
@@ -205,7 +225,7 @@ public class TCP_Server {
                 try {
                     // blocking call, yeni bir client bağlantısı bekler
                     Socket clientSocket = serverSocket.accept();
-                    System.out.println("Yeni bir client bağlandı : " + clientSocket);
+//                    System.out.println("Yeni bir client bağlandı : " + clientSocket);
 
                     // bağlanan her client için bir thread oluşturup dinlemeyi başlat
                     new ListenThread(clientSocket).start();
@@ -218,6 +238,7 @@ public class TCP_Server {
         serverThread.start();
     }
 
+    /*
     protected void sendmsg(Msg msg, ObjectOutputStream outputstream) throws IOException {
         //  ilgili clienta mesaj gönder
         Contact targetClient = null;
@@ -242,30 +263,30 @@ public class TCP_Server {
             }
         }
 
-    }
-
+    }*/
     protected void sendmsg(long senderNo, long reciverNo, Object msg) throws IOException {
         //  ilgili clienta mesaj gönder
         Contact targetClient = null;
+        boolean exsit = false;
         for (Contact client : allClients) {
             if (client.telefon == reciverNo) {
+                exsit = true;
                 targetClient = client;
             }
         }
         if (targetClient.state.equals("online")) {
-            for (OutputStreams objectOutputStream : objectOutputStreams) {
-                if(objectOutputStream.clientNo==senderNo){
-                objectOutputStream.clientoutput.writeObject("you have nwe msg");
+            for (OutputStreams onlineClient : onlineClientList) {
+                if (onlineClient.clientNo == reciverNo) {
+                    onlineClient.clientoutput.writeObject("you have nwe msg");
 
-                objectOutputStream.clientoutput.writeObject(senderNo);
-                objectOutputStream.clientoutput.writeObject(msg);}
+                    onlineClient.clientoutput.writeObject(senderNo);
+                    onlineClient.clientoutput.writeObject(msg);
+                }
 
             }
 
-            System.out.println("from method " + "mesaj.equals(\"send msg\")");
-
         } else {
-
+            System.out.println("offline");
         }
 
     }
@@ -304,6 +325,7 @@ public class TCP_Server {
                 ObjectOutput out = new ObjectOutputStream(bos)) {
             out.writeObject(object);
             return bos.toByteArray();
+
         }
     }
 
@@ -332,6 +354,7 @@ public class TCP_Server {
                 // output : server'a bağlı olan client'a mesaj göndermek için
                 clientInput = new ObjectInputStream(clientSocket.getInputStream());
                 clientOutput = new ObjectOutputStream(clientSocket.getOutputStream());
+
                 Object mesaj;
                 // client mesaj gönderdiği sürece mesajı al
 
@@ -345,12 +368,14 @@ public class TCP_Server {
                     // client'in gönderdiği mesajı server ekranına yaz  
 
                     if (mesaj.equals("Creat Client") && client_info != null) {// when sing-up button is pressed the client will send to the server this msg 
-                        System.out.println(client_info.name);
                         creatClient(client_info, clientOutput);
+                        onlineClientList.add(new OutputStreams(clientOutput, client_info.telefon));
+
                     }
                     if (mesaj.equals("log in")) {
-                        System.out.println("log in ");
                         login(client_info, clientOutput);
+                        onlineClientList.add(new OutputStreams(clientOutput, client_info.telefon));
+
                     }
                     // clientin attigi mesaji serverin arayuzune yaz 
                     if (mesaj instanceof File) {
@@ -370,10 +395,10 @@ public class TCP_Server {
                     if (mesaj.equals("get variation qustion")) {
                         getVarietionQustion(client_info, clientOutput);
                     }
-                    if (mesaj.equals("@-send msg for other client:")) {
+                    /* if (mesaj.equals("@-send msg for other client:")) {
                         Msg msg = (Msg) clientInput.readObject();
                         sendmsg(msg, clientOutput);
-                    }
+                    }*/
                     if (mesaj.equals("@-send string msg for other client:")) {
                         long sender = Long.parseLong(clientInput.readObject() + "");
                         long reciver = Long.parseLong(clientInput.readObject() + "");
@@ -389,13 +414,14 @@ public class TCP_Server {
 //                    }
                     if (mesaj.equals("@ add new contact")) {
                         mesaj = clientInput.readObject();
-                        System.out.println("@ add new contact" + mesaj);
 
-                        long contectTobeAdded = Long.parseLong(mesaj + "");
-                        // searchClient(tel, client_info,clientOutput);
-                        // System.out.println("size befor:" + client_info.contacts.size());
+                        long contectTobeAdded = Long.parseLong(mesaj.toString());
                         addContactToClientContactList(client_info, contectTobeAdded, clientOutput);
 
+                    }
+                    if (mesaj.equals("@ my contacts  pleas")) {
+                        long accountOwner = Long.parseLong(clientInput.readObject() + "");
+                        sendContactList(accountOwner);
                     }
                 }
                 // baglanan clientin icin   bilgisini server arayuzune yazdiryorum
@@ -415,6 +441,18 @@ public class TCP_Server {
                     if (clientSocket != null) {
                         clientSocket.close();
                     }
+                    for (Contact client : allClients) {
+                        if (client_info != null && client_info.telefon == client.telefon) {
+
+                            client.state = "offline";
+                        }
+                    }
+                    for (int i = 0; i < onlineClientList.size(); i++) {
+                        if (onlineClientList.get(i).clientNo == client_info.telefon) {
+                            onlineClientList.remove(i);
+                        }
+                    }
+
                     writeToHistory("Soket kapatıldı : " + clientSocket);
                 } catch (IOException ex) {
                     System.out.println("Hata - Soket kapatılamadı : " + ex);

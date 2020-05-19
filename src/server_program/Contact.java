@@ -18,9 +18,9 @@ import server_program.Chat;
 public class Contact implements Serializable{
   protected long telefon;
    protected String name;
-   protected static ArrayList <Chat> allChat= new ArrayList<>();// client log-in yapttiktan sonra gostirilmek uzere 
-   protected static  ArrayList <Contact> contacts= new ArrayList<>(); //clientin arkadslarini saklamak icin
-   protected String state;//it could be :null (while singing up) log-in (if client not siged-out ) log out (if client registered but signed-out)
+   protected ArrayList <Chat> allChat= new ArrayList<>();// client log-in yapttiktan sonra gostirilmek uzere 
+   protected ArrayList <Contact> contacts= new ArrayList<>(); //clientin arkadslarini saklamak icin
+   protected String state="-";//it could be :null (while singing up) log-in (if client not siged-out ) log out (if client registered but signed-out)
  
    protected String password;
    protected String variationQustion ;

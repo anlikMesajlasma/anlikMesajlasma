@@ -39,22 +39,28 @@ import server_program.Msg;
 public class sendMsg_UI extends javax.swing.JFrame {
 
     TCP_Client client;
-    static  long selectedContactNo;
-    static DefaultListModel model = new DefaultListModel();
-    static int count = 0;
+    long selectedContactNo;
+    DefaultListModel model = new DefaultListModel();
+    int count = 0;
 
     /**
      * Creates new form sendMsg_UI
      */
-    public sendMsg_UI(TCP_Client client, long selectedContactNo) {
+    public sendMsg_UI(TCP_Client client, long selectedContactNo) throws IOException {
         this.client = client;
         this.selectedContactNo = selectedContactNo;
         this.setLocationRelativeTo(null);
         initComponents();
+        showHistory();
 
     }
 
-    void showThisChat() {
+    void showHistory() throws IOException {
+        client.askForHistory(client.getContact().getTelefon(), selectedContactNo, jList1, this);
+
+    }
+
+    /* void showThisChat() {
         jList1.setModel(model);
 
         for (Chat chat : client.getContact().getallChat()) {
@@ -90,8 +96,7 @@ public class sendMsg_UI extends javax.swing.JFrame {
     JList getJlist() {
         return this.jList1;
 
-    }
-
+    }*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -224,8 +229,8 @@ public class sendMsg_UI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-           // addMsgToChatHistory(new Msg(jTextField1.getText(), client.getContact().getTelefon(), selectedContactNo.getTelefon()));
-           // showThisChat();
+            // addMsgToChatHistory(new Msg(jTextField1.getText(), client.getContact().getTelefon(), selectedContactNo.getTelefon()));
+            // showThisChat();
             client.sendMessage(client.getContact().getTelefon(), selectedContactNo, jTextField1.getText(), jList1);
 
 // TODO add your handling code here:
@@ -235,8 +240,12 @@ public class sendMsg_UI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-new main_UI(client ,client.getContact()).setVisible(true);
-this.dispose();
+        try {
+            new main_UI(client).setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(sendMsg_UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.setVisible(false);
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -266,16 +275,16 @@ this.dispose();
             java.util.logging.Logger.getLogger(sendMsg_UI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        try {
-
-            InetAddress inetAddress = InetAddress.getLocalHost();
-
-            TCP_Client client = new TCP_Client();
-            client.start(inetAddress);
-            System.out.println("started");
-        } catch (IOException ex) {
-            Logger.getLogger(SingUp_UI.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//
+//            InetAddress inetAddress = InetAddress.getLocalHost();
+//
+//            TCP_Client client = new TCP_Client();
+//            client.start(inetAddress);
+//            System.out.println("started");
+//        } catch (IOException ex) {
+//            Logger.getLogger(SingUp_UI.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

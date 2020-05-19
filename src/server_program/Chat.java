@@ -12,21 +12,16 @@ import java.util.ArrayList;
  * @author HP
  */
 public class Chat {
-    long acountOwner;
     long chatContact;
 
     ArrayList<Msg> seenSentMsg ;
     ArrayList<Msg> newMsg ;
 
-    public Chat(long acountOwner ,long chatContact) {
-        this.acountOwner = acountOwner;
+    public Chat(long chatContact ,String msg) {
         this.seenSentMsg = new ArrayList<>();
         this.newMsg=new ArrayList<>();
     }
 
-    public long getAcountOwner() {
-        return acountOwner;
-    }
 
  
     public long getChatContact() {
