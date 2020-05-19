@@ -28,9 +28,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import server_program.Chat;
-import server_program.Contact;
-import server_program.Msg;
+import server_program.chatRoom;
+import server_program.contact;
+import server_program.msg;
 
 /**
  *
@@ -66,16 +66,16 @@ public class sendMsg_UI extends javax.swing.JFrame {
     /* void showThisChat() {
         jList1.setModel(model);
 
-        for (Chat chat : client.getContact().getallChat()) {
+        for (chatRoom chat : client.getContact().getallChat()) {
             if (selectedContactNo == chat.getChatContact()) {
-                for (Msg msg : chat.getSeenSentMsg()) {
+                for (msg msg : chat.getSeenSentMsg()) {
                     model.add(count, msg);
                     count++;
 
                 }
                 model.add(count, "new msg");
 
-                for (Msg msg : chat.getNewMsg()) {
+                for (msg msg : chat.getNewMsg()) {
                     model.add(count, msg);
                     count++;
 
@@ -84,10 +84,10 @@ public class sendMsg_UI extends javax.swing.JFrame {
         }
     }
 
-    void addMsgToChatHistory(Msg masg) {
+    void addMsgToChatHistory(msg masg) {
         jList1.setModel(model);
 
-        for (Chat chat : client.getContact().getallChat()) {
+        for (chatRoom chat : client.getContact().getallChat()) {
             if (selectedContactNo== chat.getChatContact()) {
                 chat.getSeenSentMsg().add(masg);
                 count++;
@@ -231,9 +231,9 @@ public class sendMsg_UI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            // addMsgToChatHistory(new Msg(jTextField1.getText(), client.getContact().getTelefon(), selectedContactNo.getTelefon()));
+            // addMsgToChatHistory(new msg(jTextField1.getText(), client.getContact().getTelefon(), selectedContactNo.getTelefon()));
             // showThisChat();
-            client.sendMessage(client.getContact().getTelefon(), selectedContactNo, jTextField1.getText(), jList1);
+            this.client.sendMessage(this.client.getContact().getTelefon(), selectedContactNo, jTextField1.getText(), jList1);
 
 // TODO add your handling code here:
         } catch (IOException ex) {

@@ -8,8 +8,8 @@ package client_program;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import server_program.Chat;
-import server_program.Contact;
+import server_program.chatRoom;
+import server_program.contact;
 
 /**
  *
@@ -21,7 +21,7 @@ public class searchContact extends javax.swing.JFrame {
      * Creates new form searchContact
      */
     TCP_Client client;
-    Contact contactToadd;
+    contact contactToadd;
     int count = 0;
 
     public searchContact(TCP_Client client) {

@@ -2,7 +2,7 @@ package client_program;
 
 import java.awt.Color;
 import java.awt.List;
-import server_program.Contact;
+import server_program.contact;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -19,7 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
-import server_program.Msg;
+import server_program.msg;
 
 /**
  * @file TCP_Client.java
@@ -40,8 +40,8 @@ public class TCP_Client {
     private DefaultListModel model = new DefaultListModel();
     private int count = 0;
     //private  allServerCont;
-    private Contact accuontOwner;
-    private Contact chatReciverContact;
+    private contact accuontOwner;
+    private contact chatReciverContact;
     private javax.swing.JLabel JLabel;
     private Thread clientThread;
     private javax.swing.JLabel JLabe2;
@@ -49,16 +49,16 @@ public class TCP_Client {
     private JLabel errorjLabel;
     private JLabel namejLabel;
     private JLabel teljLabel;
-    private Contact contactToBeadded;
+    private contact contactToBeadded;
 //    private static TCP_Client clientfronAddingFrmae;
     private javax.swing.JList contacts_jList;
 
-    protected Contact getContact() {
+    protected contact getContact() {
 
         return accuontOwner;
     }
 
-    protected void sing_up_to_server(Contact contact, javax.swing.JLabel jLabelName, javax.swing.JFrame jframe) throws IOException {
+    protected void sing_up_to_server(contact contact, javax.swing.JLabel jLabelName, javax.swing.JFrame jframe) throws IOException {
         this.JLabel = jLabelName;
         jFrame_singUp = jframe;
 
@@ -68,13 +68,21 @@ public class TCP_Client {
 
     }
 
-    protected void log_in_to_server(Contact client, javax.swing.JLabel jLabelName, javax.swing.JFrame jframe) throws IOException {
+//    protected void log_in_to_server(long tel, String pass, javax.swing.JLabel jLabelName, javax.swing.JFrame jframe) throws IOException {
+//        this.JLabel = jLabelName;
+//        jFrame_logIn = jframe;
+//        
+//        sendMessage(client);// send to  the server  client you want to creat 
+//        // accuontOwner = client;
+//        sendMessage("log in");//say to server that you need to creat client
+//
+//    }
+    protected void log_in_to_server(long tel, String pass, javax.swing.JLabel jLabelName, javax.swing.JFrame jframe) throws IOException {
         this.JLabel = jLabelName;
         jFrame_logIn = jframe;
-        sendMessage(client);// send to  the server  client you want to creat 
-        // accuontOwner = client;
         sendMessage("log in");//say to server that you need to creat client
-
+        sendMessage(tel);// send to  the server  client you want to creat 
+        sendMessage(pass);
     }
 
     protected void askForContact(long accountOwner, javax.swing.JList msgHistory, javax.swing.JFrame jframe) throws IOException {
@@ -96,7 +104,7 @@ public class TCP_Client {
 
     }
 
-    void getVariationQustion(Contact client, javax.swing.JLabel jLabelName1, javax.swing.JLabel jLabelName2) throws IOException {
+    void getVariationQustion(contact client, javax.swing.JLabel jLabelName1, javax.swing.JLabel jLabelName2) throws IOException {
         this.JLabel = jLabelName1;
         this.JLabe2 = jLabelName2;
 
@@ -106,7 +114,7 @@ public class TCP_Client {
 
     }
 
-    void restPass(Contact client, javax.swing.JLabel jLabelName, String answer, javax.swing.JFrame jframe) throws IOException {
+    void restPass(contact client, javax.swing.JLabel jLabelName, String answer, javax.swing.JFrame jframe) throws IOException {
         this.JLabel = jLabelName;
         jFrame_singUp = jframe;
         sendMessage("$" + answer);// send to  the server  client you want to creat 
@@ -130,7 +138,6 @@ public class TCP_Client {
         if (contactTobaAdded == accuontOwner.getTelefon()) {
             errorjLabel.setText("You can not add yourself !");
         } else {
-
             try {
                 sendMessage("@ add new contact");
                 sendMessage(contactTobaAdded);
@@ -146,7 +153,7 @@ public class TCP_Client {
         this.errorjLabel.setText("Telephone number not found !");
     }
 
-    protected void writeBackContactDetailsToSearchContactjFrame(Contact contact) {
+    protected void writeBackContactDetailsToSearchContactjFrame(contact contact) {
         this.namejLabel.setText(contact.getName());
         this.teljLabel.setText(String.valueOf((contact.getTelefon())));
         contactToBeadded = contact;
@@ -166,7 +173,7 @@ public class TCP_Client {
         clientThread.start();
     }
 
-    protected void sendMessage(Msg msg, javax.swing.JList jlist) throws IOException {
+    protected void sendMessage(msg msg, javax.swing.JList jlist) throws IOException {
         // gelen mesajı server'a gönder
         jList = jlist;
         clientOutput.writeObject("@-send msg for other client:");
@@ -232,9 +239,9 @@ public class TCP_Client {
                 while ((mesaj = clientInput.readObject()) != null) {
                     // serverden gelen mesaj This telefon already exist!ise clientin arayuzune yaz kayit edilmedigini bilsin
 
-                    if (mesaj instanceof Contact) {
+                    if (mesaj instanceof contact) {
 
-                        accuontOwner = (Contact) mesaj;
+                        accuontOwner = (contact) mesaj;
                     }
                     if (mesaj.equals("This telefon already exist!")) {
                         JLabel.setText(mesaj + "");
@@ -245,14 +252,14 @@ public class TCP_Client {
                         mesaj = clientInput.readObject();
                         JOptionPane.showMessageDialog(null, "Successfully singed-up !");// client sing-up jframde ise ve created mesaji geldiyse bunu goster
                         jFrame_singUp.setVisible(false);// sing-up jframini kapat 
-                        client.accuontOwner = (Contact) mesaj;
+                        client.accuontOwner = (contact) mesaj;
                         new login_UI(this.client).setVisible(true);
 
                     }
                     if (mesaj.equals("Sucessfully log-in")) {
 
                         mesaj = clientInput.readObject();
-                        client.accuontOwner = (Contact) mesaj;
+                        client.accuontOwner = (contact) mesaj;
                         new main_UI(this.client).setVisible(true);// uygulamanin ana j framini ac 
                         jFrame_logIn.setVisible(false);
                     }
@@ -281,9 +288,9 @@ public class TCP_Client {
                     }
                     if (mesaj.equals("sending contact")) {
                         mesaj = clientInput.readObject();
-                        if (mesaj instanceof Contact) {
+                        if (mesaj instanceof contact) {
 
-                            writeBackContactDetailsToSearchContactjFrame((Contact) mesaj);
+                            writeBackContactDetailsToSearchContactjFrame((contact) mesaj);
                         }
                         if (mesaj.equals("tel number not found")) {
                             writeBackSearchContactError();
@@ -301,7 +308,7 @@ public class TCP_Client {
 
                     if (mesaj.equals("You have this contact already !")) {
                         mesaj = clientInput.readObject();
-                        ArrayList<Contact> updatedList = new ArrayList<>((ArrayList<Contact>) mesaj);
+                        ArrayList<contact> updatedList = new ArrayList<>((ArrayList<contact>) mesaj);
 
                         errorjLabel.setText("You have this contact already !");
 
@@ -311,10 +318,10 @@ public class TCP_Client {
                         mesaj = clientInput.readObject();
                         contacts_jList.setModel(model);
 
-                        ArrayList<Contact> updatedList = new ArrayList<>((ArrayList<Contact>) mesaj);
+                        ArrayList<contact> updatedList = new ArrayList<>((ArrayList<contact>) mesaj);
 
                         int count = 0;
-                        for (Contact contact : updatedList) {
+                        for (contact contact : updatedList) {
                             model.add(count, contact.getTelefon()+"");
                             count++;
                         }
