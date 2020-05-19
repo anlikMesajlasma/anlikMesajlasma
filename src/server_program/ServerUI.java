@@ -161,7 +161,7 @@ public class ServerUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonStopActionPerformed
 
     private void jButtonSendBroadcastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSendBroadcastActionPerformed
-      
+
     }//GEN-LAST:event_jButtonSendBroadcastActionPerformed
 
     /**

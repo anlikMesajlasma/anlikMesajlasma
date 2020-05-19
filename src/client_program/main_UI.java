@@ -6,7 +6,10 @@
 package client_program;
 
 import java.awt.HeadlessException;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import server_program.Contact;
 
@@ -20,44 +23,51 @@ public class main_UI extends javax.swing.JFrame {
     /**
      * Creates new form Contact_UI
      */
-                static DefaultListModel model = new DefaultListModel();
+    DefaultListModel model = new DefaultListModel();
 
-    public main_UI() throws HeadlessException {
-                initComponents();
+//    public main_UI() throws HeadlessException {
+//        initComponents();
+//
+//    }
 
-    }
+    TCP_Client client;
+    private int count = 0;
+    Contact me;
 
-    static TCP_Client client;
-    private  int count=0;
-Contact me ; 
-    public main_UI(TCP_Client client ,Contact me) {
+//    public main_UI(TCP_Client client, Contact me) {
+//        initComponents();
+//        this.setTitle(" Tel : " + client.getContact().getTelefon());
+//        this.setLocationRelativeTo(null);
+//        this.client = client;
+//        this.me = me;
+//
+//    }
+    public main_UI(TCP_Client client) throws IOException {
         initComponents();
-        this.setTitle( " Tel : "+ client.getContact().getTelefon());
+        if (client.getContact() != null) {
+            this.setTitle(" Tel : " + client.getContact().getTelefon());
+        }
         this.setLocationRelativeTo(null);
         this.client = client;
-        this.me=me;
-        showContactList();
-        
-    }
-    public main_UI(TCP_Client client) {
-        initComponents();
-        this.setTitle( " Tel : "+ client.getContact().getTelefon());
-        this.setLocationRelativeTo(null);
-        this.client = client;
-        showContactList();
-        
-    }
-   final void showContactList(){
+        showContactList(client);
 
-       jList1_contact.setModel(model);
-       //System.out.println("from showContactList"+client.getContact().getContacts().size());
+    }
 
-       for (Contact contact : client.getContact().getContacts()) {
-           System.out.println("contact"+contact.getTelefon());
-           model.add(count,contact.getTelefon()+"");
-           count++;
-       }
-   }
+    final void showContactList(TCP_Client client) throws IOException {
+        if (client.getContact() != null) {
+            client.askForContact(client.getContact().getTelefon(), jList1_contact, this);
+        }
+//
+//       jList1_contact.setModel(model);
+        //System.out.println("from showContactList"+client.getContact().getContacts().size());
+
+//       for (Contact contact : client.getContact().getContacts()) {
+//           System.out.println("contact"+contact.getTelefon());
+//           model.add(count,contact.getTelefon()+"");
+//           count++;
+//       }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -105,7 +115,12 @@ Contact me ;
             }
         });
 
-        jButton1.setText("Delete account");
+        jButton1.setText("Sign out");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Delete Chat");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -134,7 +149,7 @@ Contact me ;
                                 .addComponent(jButton1)
                                 .addGap(30, 30, 30)
                                 .addComponent(jButton2)))
-                        .addGap(0, 3, Short.MAX_VALUE)))
+                        .addGap(0, 37, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -168,16 +183,21 @@ Contact me ;
     }//GEN-LAST:event_jButton1_addContactActionPerformed
 
     private void jButton2_sendMsgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2_sendMsgActionPerformed
-        this.setVisible(false);
-        long chatCotactNo =0;
-        Contact selcetedContact = new Contact();
-        if(!jList1_contact.isSelectionEmpty()){
-         chatCotactNo = Long.parseLong(jList1_contact.getSelectedValue());
-            System.out.println("chatCotactNo :"+ chatCotactNo);
-        }
-        new sendMsg_UI(client, chatCotactNo).setVisible(true);
+        try {
+            long chatCotactNo=0;
+//            Contact selcetedContact = new Contact();
+            System.out.println(" this is from sed"+jList1_contact.getSelectedValue()+ "");
+       
+                System.out.println("chatCotactNo :" + chatCotactNo);
+            
 
-        // TODO add your handling code here:
+            new sendMsg_UI(client, chatCotactNo).setVisible(true);
+            this.setVisible(false);
+
+            // TODO add your handling code here:
+        } catch (IOException ex) {
+            Logger.getLogger(main_UI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton2_sendMsgActionPerformed
 
     private void jList1_contactValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1_contactValueChanged
@@ -186,11 +206,15 @@ Contact me ;
     }//GEN-LAST:event_jList1_contactValueChanged
 
     private void jList1_contactMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1_contactMouseClicked
-   jButton2_sendMsg.enable(true);        // TODO add your handling code here:
+        jButton2_sendMsg.enable(true);        // TODO add your handling code here:
 
-        
 // TODO add your handling code here:
     }//GEN-LAST:event_jList1_contactMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.setVisible(false);
+        new first_jframe(this.client).setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

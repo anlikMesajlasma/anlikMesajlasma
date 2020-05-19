@@ -17,23 +17,16 @@ import javax.swing.JOptionPane;
  * @author HP
  */
 public class SingUp_UI extends javax.swing.JFrame {
-                    TCP_Client client = new TCP_Client();
+
+    TCP_Client client;
 
     /**
      * Creates new form SingUp
      */
-    public SingUp_UI() {
+    public SingUp_UI(TCP_Client client) {
+        this.client = client;
         initComponents();
         this.setLocationRelativeTo(null);
-            try {
-                    InetAddress inetAddress = InetAddress.getLocalHost();
-                    
-                   
-                    client.start(inetAddress);
-                    System.out.println("started");
-                } catch (IOException ex) {
-                    Logger.getLogger(SingUp_UI.class.getName()).log(Level.SEVERE, null, ex);
-                }
     }
 
     /**
@@ -205,13 +198,13 @@ public class SingUp_UI extends javax.swing.JFrame {
                 jLabel6_pass_warning.setText("Passwords doesn't match! !");
                 passMatches = false;
             }
-            
 
- String variationQustion = jComboBox1.getSelectedItem()+"";
- 
+            String variationQustion = jComboBox1.getSelectedItem() + "";
+
             if (passMatches) {
-                Contact clientt = new Contact(telefonNo, name, pass,variationQustion,jTextField1.getText() );
+                Contact clientt = new Contact(telefonNo, name, pass, variationQustion, jTextField1.getText());
                 client.sing_up_to_server(clientt, jLabel3_singUp_satuat, this);
+
             }
 
 //jLabel3_singUp_satuat
@@ -225,9 +218,7 @@ public class SingUp_UI extends javax.swing.JFrame {
 
     private void jToggleButton1_BackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1_BackActionPerformed
         this.setVisible(false);
-        new first_jframe().setVisible(true);
-
-        // TODO add your handling code here:
+        new first_jframe(this.client).setVisible(true);
     }//GEN-LAST:event_jToggleButton1_BackActionPerformed
 
     /**
@@ -257,19 +248,19 @@ public class SingUp_UI extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-      try {
-                    InetAddress inetAddress = InetAddress.getLocalHost();
-                    
-                    TCP_Client client = new TCP_Client();
-                    client.start(inetAddress);
-                    System.out.println("started");
-                } catch (IOException ex) {
-                    Logger.getLogger(SingUp_UI.class.getName()).log(Level.SEVERE, null, ex);
-                }
+//      try {
+//                    InetAddress inetAddress = InetAddress.getLocalHost();
+//                    
+//                    TCP_Client client = new TCP_Client();
+//                    client.start(inetAddress);
+//                    System.out.println("started");
+//                } catch (IOException ex) {
+//                    Logger.getLogger(SingUp_UI.class.getName()).log(Level.SEVERE, null, ex);
+//                }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                    new SingUp_UI().setVisible(true);
+//                    new SingUp_UI().setVisible(true);
 
             }
         });

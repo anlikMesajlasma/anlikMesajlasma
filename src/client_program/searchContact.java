@@ -20,11 +20,13 @@ public class searchContact extends javax.swing.JFrame {
     /**
      * Creates new form searchContact
      */
-     TCP_Client client;
+    TCP_Client client;
     Contact contactToadd;
-     int count = 0;
+    int count = 0;
 
     public searchContact(TCP_Client client) {
+        this.setTitle(" Tel : " + client.getContact().getTelefon());
+
         initComponents();
         this.setLocationRelativeTo(null);
         this.client = client;
@@ -32,10 +34,7 @@ public class searchContact extends javax.swing.JFrame {
         //this.jButton2.enableInputMethods(false);
     }
 
-    public void getContactToadd(Contact contact) {
-
-        this.contactToadd = contact;
-    }
+   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -72,7 +71,7 @@ public class searchContact extends javax.swing.JFrame {
         jButton2.setText("Cancel");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jButtonCancelActionPerformed(evt);
             }
         });
 
@@ -126,22 +125,32 @@ public class searchContact extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        long tel = Long.parseLong(telNumberjTextField.getText());
-        System.out.println(tel);
-         try {
-             this.client.searchAllClientsListOnServer(tel, errorjLabel, this, client);
-             //this.jButton2.enableInputMethods(true);
-         } catch (IOException ex) {
-             Logger.getLogger(searchContact.class.getName()).log(Level.SEVERE, null, ex);
-         }
+        if (!telNumberjTextField.getText().isEmpty()) {
+            long tel = Long.parseLong(telNumberjTextField.getText());
+            System.out.println(tel);
+            try {
+                client.searchAllClientsListOnServer(tel, errorjLabel, this);
+
+                //this.jButton2.enableInputMethods(true);
+            } catch (IOException ex) {
+                Logger.getLogger(searchContact.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            errorjLabel.setText("Please enter your friend phone number !");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButtonCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCancelActionPerformed
 
-this.dispose();
-new main_UI(client).setVisible(true);
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+        this.setVisible(false);
+        try {
+            new main_UI(client).setVisible(true);
+            // TODO add your handling code here:
+        } catch (IOException ex) {
+            Logger.getLogger(searchContact.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonCancelActionPerformed
 
     /**
      * @param args the command line arguments
