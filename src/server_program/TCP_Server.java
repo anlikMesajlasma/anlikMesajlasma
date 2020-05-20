@@ -146,7 +146,6 @@ public class TCP_Server {
             outputstream.writeObject("No contact found with this number !");
         }
     }
-
     protected void resetPass(Contact client, String answer, ObjectOutputStream outputstream) throws IOException {
 
         boolean exsit = false;
@@ -182,8 +181,8 @@ public class TCP_Server {
         ArrayList<Contact> updatedList = null;
         for (Contact client : allClients) {
             if (tel == client.telefon) {
-                updatedList = new ArrayList<>(client.contacts);
-                found = true;
+               updatedList= new ArrayList<>(client.contacts) ;
+               found=true;
             }
         }
         if (found) {
@@ -242,13 +241,13 @@ public class TCP_Server {
     /*
     protected void sendmsg(Msg msg, ObjectOutputStream outputstream) throws IOException {
         //  ilgili clienta mesaj gönder
-        Contact reciverContact = null;
+        Contact targetClient = null;
         for (Contact client : allClients) {
             if (client.telefon == msg.reciver) {
-                reciverContact = client;
+                targetClient = client;
             }
         }
-        if (reciverContact.state.equals("online")) {
+        if (targetClient.state.equals("online")) {
             outputstream.writeObject("you have nwe msg");
 
             outputstream.writeObject(msg.sender);
@@ -257,7 +256,7 @@ public class TCP_Server {
             System.out.println("from method " + "mesaj.equals(\"send msg\")");
 
         } else {
-            for (Chat chat : reciverContact.allChat) {
+            for (Chat chat : targetClient.allChat) {
                 if (chat.chatContact == msg.sender) {
                     chat.newMsg.add(msg);
                 }
@@ -265,80 +264,31 @@ public class TCP_Server {
         }
 
     }*/
-    void chekIfFirstTimeOpeningChat(long senderNo, long reciverNo) {
-        boolean firstTimeOpeningChat = true;
-        Contact reciverContact = null;
-        Contact senderContact = null;
-        for (Contact client : allClients) {
-            if (client.telefon == senderNo) {
-                for (Chat contact : client.allChat) {
-                    if (contact.chatContact == reciverNo) {
-                        firstTimeOpeningChat = false;
-                                       break;
-
-                    }
-                }
-            }
-            // while looping if we found reciver client we will stor it , so if this chat getting opening for the first time we will need it 
-            if (client.telefon == reciverNo) {
-                reciverContact = client;
-                System.out.println("iam here in assining reciver ");
-            }
-            if (client.telefon == senderNo) {
-                senderContact = client;
-            }
-        }
-        if (firstTimeOpeningChat) {
-            senderContact.allChat.add(new Chat(reciverNo));
-
-            reciverContact.allChat.add(new Chat(senderNo));
-            System.out.println("from chaeking if chat firdr");
-        }
-
-    }
-
-    protected void sendmsg(long senderNo, long reciverNo, Object msg , ObjectOutputStream senderClientOutput) throws IOException {
-        chekIfFirstTimeOpeningChat(senderNo, reciverNo);
+    protected void sendmsg(long senderNo, long reciverNo, Object msg) throws IOException {
         //  ilgili clienta mesaj gönder
-     
-
+        Contact targetClient = null;
+        boolean exsit = false;
         for (Contact client : allClients) {
-            if (client.telefon == senderNo) {
-                for (Chat contact : client.allChat) {
-                    if (contact.chatContact == reciverNo) {
-                       contact.msges.add((String) msg);
-
-                    }
-                }}
-                  if (client.telefon == reciverNo) {
-                for (Chat contact : client.allChat) {
-                    if (contact.chatContact == senderNo) {
-                       contact.msges.add((String) msg);
-                        System.out.println("added to archive of both");
-                       senderClientOutput.writeObject("added to archive of both");
-                       
-                    }
-                }}
-            
-            // while looping if we found reciver client we will stor it , so if this chat getting opening for the first time we will need it 
-           
+            if (client.telefon == reciverNo) {
+                exsit = true;
+                targetClient = client;
+            }
         }
-       
-//        
-//        if (targetClient.state.equals("online")) {
-//            for (OutputStreams onlineClient : onlineClientList) {
-//                if (onlineClient.clientNo == reciverNo) {
-//                    onlineClient.clientoutput.writeObject("you have nwe msg");
-//                     
-//                    onlineClient.clientoutput.writeObject(senderNo);
-//                    onlineClient.clientoutput.writeObject(msg);
-//                }
-//
-//            }
-//
-//        } else {
-//            System.out.println("offline");
-//        }
+        if (targetClient.state.equals("online")) {
+            for (OutputStreams onlineClient : onlineClientList) {
+                if (onlineClient.clientNo == reciverNo) {
+                    onlineClient.clientoutput.writeObject("you have nwe msg");
+
+                    onlineClient.clientoutput.writeObject(senderNo);
+                    onlineClient.clientoutput.writeObject(msg);
+                }
+
+            }
+
+        } else {
+            System.out.println("offline");
+        }
+
     }
 
     protected void sendBroadcast(String message, ObjectOutputStream outputstream) throws IOException {
@@ -451,11 +401,10 @@ public class TCP_Server {
                     }*/
                     if (mesaj.equals("@-send string msg for other client:")) {
                         long sender = Long.parseLong(clientInput.readObject() + "");
-                        
                         long reciver = Long.parseLong(clientInput.readObject() + "");
                         Object msg = clientInput.readObject();
 
-                        sendmsg(sender, reciver, msg,clientOutput);
+                        sendmsg(sender, reciver, msg);
                     }
 
 //                    if (mesaj instanceof String && ((String) mesaj).contains("@tel-")) {
