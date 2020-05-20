@@ -40,23 +40,27 @@ public class sendMsg_UI extends javax.swing.JFrame {
 
     TCP_Client client;
     long selectedContactNo;
-    DefaultListModel model = new DefaultListModel();
     int count = 0;
 
     /**
      * Creates new form sendMsg_UI
      */
     public sendMsg_UI(TCP_Client client, long selectedContactNo) throws IOException {
+       this.setTitle(" Tel : " + client.getContact().getTelefon());
+        initComponents();
+
         this.client = client;
         this.selectedContactNo = selectedContactNo;
         this.setLocationRelativeTo(null);
-        initComponents();
-        showHistory();
+         showHistory();
+
+            client.askForAnynewMsg(client.getContact().getTelefon(), selectedContactNo, jList1);
+       
 
     }
 
     void showHistory() throws IOException {
-        client.askForHistory(client.getContact().getTelefon(), selectedContactNo, jList1, this);
+        client.askForHistory(client.getContact().getTelefon(), selectedContactNo, jList1);
 
     }
 
@@ -189,6 +193,8 @@ public class sendMsg_UI extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         try {
+                DefaultListModel model = new DefaultListModel();
+
             JFileChooser chooser = new JFileChooser();
             chooser.setCurrentDirectory(new File("c:\\temp"));
             chooser.setFileFilter(new FileNameExtensionFilter("pdf", "pdf"));
@@ -204,7 +210,7 @@ public class sendMsg_UI extends javax.swing.JFrame {
                     Image.SCALE_SMOOTH);
             ImageIcon imageIcon = new ImageIcon(dimg);
 
-            jList1.setModel(model);
+          
 
             // Initialize the list with items
             ImageIcon[] items = {imageIcon};
@@ -231,8 +237,10 @@ public class sendMsg_UI extends javax.swing.JFrame {
         try {
             // addMsgToChatHistory(new Msg(jTextField1.getText(), client.getContact().getTelefon(), selectedContactNo.getTelefon()));
             // showThisChat();
+            if(jTextField1.getText()!=""){
             client.sendMessage(client.getContact().getTelefon(), selectedContactNo, jTextField1.getText(), jList1);
-
+                     jTextField1.setText("");
+            }
 // TODO add your handling code here:
         } catch (IOException ex) {
             Logger.getLogger(sendMsg_UI.class.getName()).log(Level.SEVERE, null, ex);
@@ -241,6 +249,8 @@ public class sendMsg_UI extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         try {
+            client.sayToServerThatIleftTheChat();
+            this.setVisible(false);
             new main_UI(client).setVisible(true);
         } catch (IOException ex) {
             Logger.getLogger(sendMsg_UI.class.getName()).log(Level.SEVERE, null, ex);
