@@ -29,7 +29,6 @@ public class main_UI extends javax.swing.JFrame {
 //        initComponents();
 //
 //    }
-
     TCP_Client client;
     private int count = 0;
     Contact me;
@@ -50,12 +49,12 @@ public class main_UI extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.client = client;
         showContactList(client);
-
+        jButton2_sendMsg.setEnabled(false);
     }
-
+    
     final void showContactList(TCP_Client client) throws IOException {
         if (client.getContact() != null) {
-            client.askForContact(client.getContact().getTelefon(), jList1_contact, this);
+            client.askForContact(client.getContact().getTelefon(), jList1_contact);
         }
 //
 //       jList1_contact.setModel(model);
@@ -186,15 +185,14 @@ public class main_UI extends javax.swing.JFrame {
         try {
             long chatCotactNo = 0;
 //            Contact selcetedContact = new Contact();
-            System.out.println(" this is from sed"+jList1_contact.getSelectedValue() + "");
+            System.out.println(" this is from sed" + jList1_contact.getSelectedValue() + "");
             if (!jList1_contact.isSelectionEmpty()) {
-
+                
                 chatCotactNo = Long.parseLong(jList1_contact.getSelectedValue() + "");
                 System.out.println("chatCotactNo :" + chatCotactNo);
             }
-
-            new sendMsg_UI(client, chatCotactNo).setVisible(true);
             this.setVisible(false);
+            new sendMsg_UI(client, chatCotactNo).setVisible(true);
 
             // TODO add your handling code here:
         } catch (IOException ex) {
@@ -203,12 +201,12 @@ public class main_UI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2_sendMsgActionPerformed
 
     private void jList1_contactValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList1_contactValueChanged
-
+        
 
     }//GEN-LAST:event_jList1_contactValueChanged
 
     private void jList1_contactMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jList1_contactMouseClicked
-        jButton2_sendMsg.enable(true);        // TODO add your handling code here:
+        jButton2_sendMsg.setEnabled(true);        // TODO add your handling code here:
 
 // TODO add your handling code here:
     }//GEN-LAST:event_jList1_contactMouseClicked

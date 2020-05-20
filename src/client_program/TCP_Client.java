@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import server_program.Chat;
 import server_program.Msg;
 
 /**
@@ -35,8 +36,6 @@ public class TCP_Client {
     private javax.swing.JTextPane historyJTextPane;
     private javax.swing.JFrame jFrame_singUp;
     private javax.swing.JFrame jFrame_logIn;
-
-    private javax.swing.JList jList;
     private DefaultListModel model = new DefaultListModel();
     private int count = 0;
     //private  allServerCont;
@@ -52,10 +51,22 @@ public class TCP_Client {
     private Contact contactToBeadded;
 //    private static TCP_Client clientfronAddingFrmae;
     private javax.swing.JList contacts_jList;
+    private javax.swing.JList msg_jList;
 
     protected Contact getContact() {
 
         return accuontOwner;
+    }
+
+    protected void askForAnynewMsg(long sender, long reciver, javax.swing.JList msgHistory) throws IOException {
+        sendMessage("@I am on chat");
+        sendMessage(sender);
+        sendMessage(reciver);
+
+    }
+
+    protected void sayToServerThatIleftTheChat() throws IOException {
+        sendMessage("I left the chat");
     }
 
     protected void sing_up_to_server(Contact contact, javax.swing.JLabel jLabelName, javax.swing.JFrame jframe) throws IOException {
@@ -77,20 +88,19 @@ public class TCP_Client {
 
     }
 
-    protected void askForContact(long accountOwner, javax.swing.JList msgHistory, javax.swing.JFrame jframe) throws IOException {
-        this.contacts_jList = msgHistory;
-        jFrame_singUp = jframe;
-
+    protected void askForContact(long accountOwner, javax.swing.JList contactHisot) throws IOException {
+        this.contacts_jList = contactHisot;
         sendMessage("@ my contacts  pleas");
         sendMessage(accountOwner);
 
     }
 
-    protected void askForHistory(long sender, long reciver, javax.swing.JList msgHistory, javax.swing.JFrame jframe) throws IOException {
-        this.contacts_jList = msgHistory;
-        jFrame_singUp = jframe;
+    protected void askForHistory(long sender, long reciver, javax.swing.JList msgHistory) throws IOException {
+        this.msg_jList = msgHistory;
+        System.out.println("msg_jList" + msg_jList);
 
         sendMessage("@ History pleas");
+        System.out.println("@ History pleas");
         sendMessage(sender);
         sendMessage(reciver);
 
@@ -166,18 +176,18 @@ public class TCP_Client {
         clientThread.start();
     }
 
-    protected void sendMessage(Msg msg, javax.swing.JList jlist) throws IOException {
-        // gelen mesajı server'a gönder
-        jList = jlist;
-        clientOutput.writeObject("@-send msg for other client:");
-        clientOutput.writeObject(msg);
-    }
-
+//    protected void sendMessage(Msg msg, javax.swing.JList jlist) throws IOException {
+//        // gelen mesajı server'a gönder
+//        msg_jList = jlist;
+//        clientOutput.writeObject("@-send msg for other client:");
+//        clientOutput.writeObject(msg);
+//    }
     protected void sendMessage(long senderNo, long reciver, Object msg, javax.swing.JList jlist) throws IOException {
         // gelen mesajı server'a gönder
-        jList = jlist;
+        msg_jList = jlist;
         clientOutput.writeObject("@-send string msg for other client:");
         clientOutput.writeObject(senderNo);
+        System.out.println("rdeciver" + reciver);
         clientOutput.writeObject(reciver);
 
         clientOutput.writeObject(msg);
@@ -307,6 +317,40 @@ public class TCP_Client {
                         errorjLabel.setText("You have this contact already !");
 
                     }
+                    if(mesaj.equals("@you have new mesaj")){
+                    mesaj = clientInput.readObject();
+                    DefaultListModel model2 = new DefaultListModel();
+                        System.out.println("from you have new msg ");
+                        mesaj = clientInput.readObject();
+                        if(msg_jList!=null){
+                        msg_jList.setModel(model2);
+                        
+                        System.out.println("msg_jList" + msg_jList);
+                        ArrayList<String> msgHistoy = new ArrayList<>((ArrayList<String>) mesaj);
+
+                        int count = 0;
+                        for (String msg : msgHistoy) {
+                            model2.add(count, msg);
+                            count++;
+                        }
+
+                        }
+                    }
+                    if (mesaj.equals("@Here is Your Chat History")) {
+                        DefaultListModel model2 = new DefaultListModel();
+
+                        mesaj = clientInput.readObject();
+                        msg_jList.setModel(model2);
+                        System.out.println("msg_jList" + msg_jList);
+                        ArrayList<String> msgHistoy = new ArrayList<>((ArrayList<String>) mesaj);
+
+                        int count = 0;
+                        for (String msg : msgHistoy) {
+                            model2.add(count, msg);
+                            count++;
+                        }
+
+                    }
                     if (mesaj.equals("@Your contacts ")) {
                         DefaultListModel model = new DefaultListModel();
                         mesaj = clientInput.readObject();
@@ -316,7 +360,7 @@ public class TCP_Client {
 
                         int count = 0;
                         for (Contact contact : updatedList) {
-                            model.add(count, contact.getTelefon());
+                            model.add(count, contact.getTelefon() + "");
                             count++;
                         }
 
