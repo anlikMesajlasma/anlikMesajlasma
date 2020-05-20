@@ -9,28 +9,28 @@ package server_program;
  *
  * @author HP
  */
-public class msg {
+public class Msg {
+   Object content;
+   boolean seen;
+  Long sender ;
+  Long reciver ;
 
-    Object content;
-    boolean seen;
-    Long sender;
-    Long reciver;
-
-    public msg(Object content, Long sender, Long reciver) {
+    public Msg(Object content, Long sender, Long reciver) {
         this.content = content;
         this.seen = seen;
         this.sender = sender;
         this.reciver = reciver;
     }
-
-    public msg(Long senderTel, Object content) {
-        this.content = content;
-        this.sender = senderTel;
-
+  
+    public Msg(Long senderTel, Object content) {
+       this.content = content;
+       this.sender=senderTel;
+       
     }
 
     public Object getContent() {
         return content;
     }
-
+    
+   
 }

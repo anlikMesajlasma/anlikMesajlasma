@@ -28,9 +28,9 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import server_program.chatRoom;
-import server_program.contact;
-import server_program.msg;
+import server_program.Chat;
+import server_program.Contact;
+import server_program.Msg;
 
 /**
  *
@@ -47,9 +47,6 @@ public class sendMsg_UI extends javax.swing.JFrame {
      * Creates new form sendMsg_UI
      */
     public sendMsg_UI(TCP_Client client, long selectedContactNo) throws IOException {
-        if (client.getContact() != null) {
-            this.setTitle(" Tel : " + client.getContact().getTelefon());
-        }
         this.client = client;
         this.selectedContactNo = selectedContactNo;
         this.setLocationRelativeTo(null);
@@ -66,16 +63,16 @@ public class sendMsg_UI extends javax.swing.JFrame {
     /* void showThisChat() {
         jList1.setModel(model);
 
-        for (chatRoom chat : client.getContact().getallChat()) {
+        for (Chat chat : client.getContact().getallChat()) {
             if (selectedContactNo == chat.getChatContact()) {
-                for (msg msg : chat.getSeenSentMsg()) {
+                for (Msg msg : chat.getSeenSentMsg()) {
                     model.add(count, msg);
                     count++;
 
                 }
                 model.add(count, "new msg");
 
-                for (msg msg : chat.getNewMsg()) {
+                for (Msg msg : chat.getNewMsg()) {
                     model.add(count, msg);
                     count++;
 
@@ -84,10 +81,10 @@ public class sendMsg_UI extends javax.swing.JFrame {
         }
     }
 
-    void addMsgToChatHistory(msg masg) {
+    void addMsgToChatHistory(Msg masg) {
         jList1.setModel(model);
 
-        for (chatRoom chat : client.getContact().getallChat()) {
+        for (Chat chat : client.getContact().getallChat()) {
             if (selectedContactNo== chat.getChatContact()) {
                 chat.getSeenSentMsg().add(masg);
                 count++;
@@ -217,7 +214,8 @@ public class sendMsg_UI extends javax.swing.JFrame {
 
             }
 
-            client.sendMessage(imageIcon);
+            TCP_Client tcp_client = new TCP_Client();
+            tcp_client.sendMessage(imageIcon);
 
 // "MyFiles_Lst.getModel().getSize()" - indicate the total number of files in jList
         } catch (IOException ex) {
@@ -231,9 +229,9 @@ public class sendMsg_UI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            // addMsgToChatHistory(new msg(jTextField1.getText(), client.getContact().getTelefon(), selectedContactNo.getTelefon()));
+            // addMsgToChatHistory(new Msg(jTextField1.getText(), client.getContact().getTelefon(), selectedContactNo.getTelefon()));
             // showThisChat();
-            this.client.sendMessage(this.client.getContact().getTelefon(), selectedContactNo, jTextField1.getText(), jList1);
+            client.sendMessage(client.getContact().getTelefon(), selectedContactNo, jTextField1.getText(), jList1);
 
 // TODO add your handling code here:
         } catch (IOException ex) {

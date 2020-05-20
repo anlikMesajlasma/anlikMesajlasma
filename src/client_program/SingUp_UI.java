@@ -5,7 +5,7 @@
  */
 package client_program;
 
-import server_program.contact;
+import server_program.Contact;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.logging.Level;
@@ -202,7 +202,7 @@ public class SingUp_UI extends javax.swing.JFrame {
             String variationQustion = jComboBox1.getSelectedItem() + "";
 
             if (passMatches) {
-                contact clientt = new contact(telefonNo, name, pass, variationQustion, jTextField1.getText());
+                Contact clientt = new Contact(telefonNo, name, pass, variationQustion, jTextField1.getText());
                 client.sing_up_to_server(clientt, jLabel3_singUp_satuat, this);
 
             }

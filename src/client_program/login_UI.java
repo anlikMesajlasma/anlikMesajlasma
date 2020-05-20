@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import server_program.contact;
+import server_program.Contact;
 
 /**
  *
@@ -148,8 +148,8 @@ public class login_UI extends javax.swing.JFrame {
             try {
                 long tel = Long.parseLong(jTextField1.getText());
                 String pass = String.valueOf(jPasswordField1.getPassword());
-//                contact contact = new contact(tel, pass);
-                client.log_in_to_server(tel, pass, errorjLabel, this);
+                Contact contact = new Contact(tel, pass);
+                client.log_in_to_server(contact, errorjLabel, this);
 
                 // TODO add your handling code here:
             } catch (IOException ex) {

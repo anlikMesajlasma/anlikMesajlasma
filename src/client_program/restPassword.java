@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import server_program.contact;
+import server_program.Contact;
 
 /**
  *
@@ -155,7 +155,7 @@ public class restPassword extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
-            contact contact = new contact(Long.parseLong(jTextField2.getText()));
+            Contact contact = new Contact(Long.parseLong(jTextField2.getText()));
             client.getVariationQustion(contact, jLabel5, jLabel3);
             jTextField1.setEnabled(true);
 
@@ -173,7 +173,7 @@ public class restPassword extends javax.swing.JFrame {
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         try {
-            contact contact = new contact(Long.parseLong(jTextField2.getText()));
+            Contact contact = new Contact(Long.parseLong(jTextField2.getText()));
             TCP_Client tcp_Client = new TCP_Client();
 
             tcp_Client.restPass(contact, jLabel6, jTextField1.getText(), this);

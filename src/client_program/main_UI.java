@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import server_program.contact;
+import server_program.Contact;
 
 /**
  *
@@ -32,9 +32,9 @@ public class main_UI extends javax.swing.JFrame {
 
     TCP_Client client;
     private int count = 0;
-    contact me;
+    Contact me;
 
-//    public main_UI(TCP_Client client, contact me) {
+//    public main_UI(TCP_Client client, Contact me) {
 //        initComponents();
 //        this.setTitle(" Tel : " + client.getContact().getTelefon());
 //        this.setLocationRelativeTo(null);
@@ -61,7 +61,7 @@ public class main_UI extends javax.swing.JFrame {
 //       jList1_contact.setModel(model);
         //System.out.println("from showContactList"+client.getContact().getContacts().size());
 
-//       for (contact contact : client.getContact().getContacts()) {
+//       for (Contact contact : client.getContact().getContacts()) {
 //           System.out.println("contact"+contact.getTelefon());
 //           model.add(count,contact.getTelefon()+"");
 //           count++;
@@ -184,12 +184,14 @@ public class main_UI extends javax.swing.JFrame {
 
     private void jButton2_sendMsgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2_sendMsgActionPerformed
         try {
-            long chatCotactNo=0;
-//            contact selcetedContact = new contact();
-            System.out.println(" this is from sed"+jList1_contact.getSelectedValue()+ "");
-       
+            long chatCotactNo = 0;
+//            Contact selcetedContact = new Contact();
+            System.out.println(" this is from sed"+jList1_contact.getSelectedValue() + "");
+            if (!jList1_contact.isSelectionEmpty()) {
+
+                chatCotactNo = Long.parseLong(jList1_contact.getSelectedValue() + "");
                 System.out.println("chatCotactNo :" + chatCotactNo);
-            
+            }
 
             new sendMsg_UI(client, chatCotactNo).setVisible(true);
             this.setVisible(false);
